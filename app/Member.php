@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Member extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,10 +12,10 @@ class Group extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'name'
+        'user_id', 'group_id'
     ];
 
-    public function member(){
-        return $this->hasMany('App\Member');
+    public function group(){
+        return $this->belongsTo('App\Group');
     }
 }

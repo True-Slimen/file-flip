@@ -24,8 +24,30 @@ Route::view('/sign-in', '/sign-in/index');
 
 Route::view('/sign-up', '/sign-up/index');
 
-Route::view('/dashboard', '/dashboard/dashboard');
+
 
 Auth::routes();
+
+Route::middleware('auth')->group(function () {
+    
+    Route::get('/dashboard','DashboardController@data');
+
+    Route::get('/edit-group','GroupsController@showGroupPage');
+
+    Route::get('/ged/root','Ged\GedController@gedRoot');
+
+    
+    Route::post('/edit-group','GroupsController@createGroup');
+
+    Route::post('/assign-membre','GroupsController@assignMembre');
+    
+    
+    // FIXTURES A LANCE DEPUIS LE DASHBOARD POUR PEUPLER LA BASE
+    // NE JOUER QU'UNE FOIS
+    // PASSWORD : motdepasse
+    Route::get('/dashboard/createfixtures','DashboardController@createMassUsers');
+
+
+});
 
 Route::get('/home', 'HomeController@index')->name('home');

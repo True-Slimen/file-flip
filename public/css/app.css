@@ -10946,7 +10946,8 @@ a.text-dark:focus {
 
 * {
   font-family: Gafata;
-  font-size: 24px;
+  font-size: 18px;
+  color: #5c5c5c;
   box-sizing: border-box;
 }
 
@@ -10987,7 +10988,7 @@ h2 {
 
 .custom-btn-secondary {
   padding: 10px 20px;
-  font-size: 22px !important;
+  font-size: 18px !important;
   color: #5c5c5c !important;
   background-color: white;
   border: 1px solid #5c5c5c;
@@ -11000,6 +11001,12 @@ h2 {
   border: 1px solid white;
   background-color: #5c5c5c;
   border-radius: 50px;
+  text-decoration: none;
+}
+
+.custom-card {
+  border-radius: 10px;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.11);
 }
 
 label {
@@ -11070,7 +11077,7 @@ nav .nav-connect {
 
 footer {
   background: #ccc;
-  bottom: 0;
+  bottom: auto;
   position: absolute;
   width: 100%;
   padding-top: 30px;

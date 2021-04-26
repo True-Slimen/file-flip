@@ -15,7 +15,7 @@ class CreateNotifiesTable extends Migration
     {
         Schema::create('notifies', function (Blueprint $table) {
             $table->id();
-            $table->integer('fileid');
+            $table->integer('file_id');
             $table->string('message');
             $table->integer('is_read');
             $table->timestamps();

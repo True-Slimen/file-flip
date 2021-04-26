@@ -58,10 +58,13 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/dashboard">
+                                    {{ __('Dashboard') }}
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    {{ __('Se déconnecter') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -93,7 +96,7 @@
                         <a class="footer-link" href="/sign-up">S'inscrire</a>
                     </li>
                 </ul>
-                <p class="text-center">File Flip, powered by Laravel 5.8 - Aucuns droits réservés :) </p>
+                <p class="text-center">File Flip, powered by Laravel 7.3 - Aucuns droits réservés :) </p>
             </div>
         </footer>
 

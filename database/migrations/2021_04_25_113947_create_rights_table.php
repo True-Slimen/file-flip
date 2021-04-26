@@ -15,8 +15,8 @@ class CreateRightsTable extends Migration
     {
         Schema::create('rights', function (Blueprint $table) {
             $table->id();
-            $table->integer('userid')->nullable();
-            $table->integer('groupeid')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('groupe_id')->nullable();
             $table->integer('fileid');
             $table->string('name');
             $table->integer('type');
