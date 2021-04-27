@@ -41,16 +41,32 @@
                 </form>
                 <hr>
                 <h4>Groupe existant</h4>
-                <ul>
-                    @foreach($members as $member)
-                        <li><strong>{{ $member->group->name }}</strong></li>
-                        Membre :
-                        <ul>
-                            
-                            <li>{{ $member->user_id }}</li>
-                        </ul>
+                <div id="accordion">
+                    @foreach($groups as $group)
+                        <div class="card mb-4">
+                            <div class="card-header p-0" id="headingOne">
+                                <button class="btn col-12" data-toggle="collapse" data-target="#collapse{{ $group->id }}" aria-expanded="true" aria-controls="collapseOne">
+                                <h4>{{ $group->name }}</h4>
+                                </button>
+                            </div>
+
+                            <div id="collapse{{ $group->id }}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            @foreach($members as $member)
+                            @if($member->group_id == $group->id)
+                            <div class="card-body p-0">
+                                <ul class="mt-2">
+                                
+                                    <li>{{ $member->user->firstname }}</li>
+                                    
+                                </ul>
+                            </div>
+                            @endif
+                            @endforeach
+                            </div>
+                        </div>
                     @endforeach
-                </ul>
+                </div>
+                
 
             </div>
         </div>

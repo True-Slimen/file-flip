@@ -15,8 +15,18 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('group_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
+            $table->unsignedBigInteger('group_id');
+            $table->foreign('group_id')
+            ->references('id')
+            ->on('groups')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
             $table->timestamps();
         });
     }
