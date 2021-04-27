@@ -40,17 +40,17 @@
                     </div>
                 </form>
                 <hr>
-
                 <h4>Groupe existant</h4>
                 <ul>
-                    @foreach($groups as $group)
-                        <li>{{ $group->name }}</li>
+                    @foreach($members as $member)
+                        <li><strong>{{ $member->group->name }}</strong></li>
+                        Membre :
                         <ul>
-                            <li>{{ $group->member}}</li>
+                            
+                            <li>{{ $member->user_id }}</li>
                         </ul>
                     @endforeach
                 </ul>
-
 
             </div>
         </div>

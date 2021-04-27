@@ -12,9 +12,10 @@ class GroupsController extends Controller{
 
         $groups = Group::all();
         $users = User::all();
+        $members = Member::all();
 
         return view('/dashboard/group/group', [
-            'groups' => $groups, 'users' => $users
+            'groups' => $groups, 'users' => $users, 'members' => $members
         ]);
     }
 

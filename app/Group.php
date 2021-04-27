@@ -12,7 +12,7 @@ class Group extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'name'
+        'name'
     ];
 
     public function member(){
