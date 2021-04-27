@@ -26,7 +26,7 @@
                 <ul>
                     <li><a href="#">tuto.php</a></li>
                 </ul>
-                <a href="#">Enregistrer un fichier</a>
+                <a href="/upload-file">Enregistrer un fichier</a>
             </div>
         </div>
 

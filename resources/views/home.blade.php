@@ -12,7 +12,7 @@
         <div class="col-6">
             <h1 class="primary-font">Bienvenue sur File Flip</h1>
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum, doloremque dolores doloribus culpa id debitis sed veniam? Nam numquam, assumenda enim unde ex blanditiis ducimus, sit nostrum est soluta repudiandae.</p>
-            <a href="/sign-up" class="btn custom-btn-primary">S'inscrire</a>
+            <a href="{{ route('register') }}" class="btn custom-btn-primary">S'inscrire</a>
         </div>
     </div>
 </section>

@@ -34,9 +34,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/edit-group','GroupsController@showGroupPage');
 
+    Route::get('/upload-file','FilesController@showUploadPage');
+
     Route::get('/ged/root','Ged\GedController@gedRoot');
 
-    
     Route::post('/edit-group','GroupsController@createGroup');
 
     Route::post('/assign-membre','GroupsController@assignMembre');
