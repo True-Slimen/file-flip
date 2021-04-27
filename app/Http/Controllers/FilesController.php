@@ -6,5 +6,9 @@ use Illuminate\Http\Request;
 
 class FilesController extends Controller
 {
-    //
+    public function showUploadPage(){
+
+
+        return view('/dashboard/fileUpload/fileUpload');
+    }
 }
