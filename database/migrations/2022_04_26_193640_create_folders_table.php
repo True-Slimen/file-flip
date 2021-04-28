@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFilesTable extends Migration
+class CreateFoldersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('folders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')
@@ -21,9 +21,8 @@ class CreateFilesTable extends Migration
             ->on('users')
             ->onDelete('restrict')
             ->onUpdate('restrict');
-            $table->string('type');
-            $table->string('filename');
-            $table->string('filepath');
+            $table->string('foldername');
+            $table->string('folderpath');
             $table->timestamps();
         });
     }
@@ -35,6 +34,6 @@ class CreateFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('folders');
     }
 }

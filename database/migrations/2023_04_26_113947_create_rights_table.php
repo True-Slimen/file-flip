@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFoldersTable extends Migration
+class CreateRightsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,28 +13,32 @@ class CreateFoldersTable extends Migration
      */
     public function up()
     {
-        Schema::create('folders', function (Blueprint $table) {
+        Schema::create('rights', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')
             ->references('id')
             ->on('users')
             ->onDelete('restrict')
             ->onUpdate('restrict');
-            $table->unsignedBigInteger('file_id');
+            $table->unsignedBigInteger('group_id')->nullable();
+            $table->foreign('group_id')
+            ->references('id')
+            ->on('groups')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
+            $table->unsignedBigInteger('file_id')->nullable();
             $table->foreign('file_id')
             ->references('id')
             ->on('files')
             ->onDelete('restrict')
             ->onUpdate('restrict');
-            $table->unsignedBigInteger('folder_id');
+            $table->unsignedBigInteger('folder_id')->nullable();
             $table->foreign('folder_id')
             ->references('id')
             ->on('folders')
             ->onDelete('restrict')
             ->onUpdate('restrict');
-            $table->string('foldername');
-            $table->string('folderpath');
             $table->timestamps();
         });
     }
@@ -46,6 +50,6 @@ class CreateFoldersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('folders');
+        Schema::dropIfExists('rights');
     }
 }

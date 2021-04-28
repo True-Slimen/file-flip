@@ -18,4 +18,8 @@ class Group extends Model
     public function member(){
         return $this->hasMany('App\Member');
     }
+
+    public function right(){
+        return $this->hasMany('App\Right');
+    }
 }

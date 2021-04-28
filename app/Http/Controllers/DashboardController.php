@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller{
 
     public function data(){
-        return view('/dashboard/dashboard');
+        $user_current_id =  Auth::user();
+
+        return view('/dashboard/dashboard', ['user_id' => $user_current_id]);
     }
 
     /**

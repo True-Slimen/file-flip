@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/edit-group','GroupsController@createGroup');
 
     Route::post('/assign-membre','GroupsController@assignMembre');
+
+    Route::post('/assign-right','RightsController@assignRight');
     
     
     // FIXTURES A LANCE DEPUIS LE DASHBOARD POUR PEUPLER LA BASE

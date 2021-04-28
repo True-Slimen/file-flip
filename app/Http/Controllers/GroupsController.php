@@ -19,12 +19,12 @@ class GroupsController extends Controller{
 
         
 
-        $grouptests = Member::find(1)->user;
+        //$grouptests = Member::find(1)->user;
 
         
 
         return view('/dashboard/group/group', [
-            'groups' => $groups, 'users' => $users, 'members' => $members, 'grouptests' => $grouptests
+            'groups' => $groups, 'users' => $users, 'members' => $members
         ]);
     }
 
@@ -54,10 +54,10 @@ class GroupsController extends Controller{
         $groupid = request('groupname');
         $userid = request('username');
 
-        $group = new Member();
-        $group->group_id = $groupid;
-        $group->user_id = $userid;
-        $group->save();
+        $member = new Member();
+        $member->group_id = $groupid;
+        $member->user_id = $userid;
+        $member->save();
 
 
         return back();

@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="groupname" class="col-md-4 col-form-label">Nom du membre</label>
+                        <label for="groupname" class="col-md-4 col-form-label">Nom du groupe</label>
 
                         <div class="">
                         <select name="groupname" id="groupname" class="form-control @error('groupname') is-invalid @enderror" >

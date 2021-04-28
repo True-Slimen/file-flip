@@ -15,7 +15,11 @@ class Folder extends Model
         'owner_id', 'type', 'foldername', 'folderpath'
     ];
 
-    public function member(){
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function right(){
         return $this->hasMany('App\Right');
     }
 }
