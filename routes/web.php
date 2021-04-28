@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/edit-group','GroupsController@createGroup');
 
     Route::post('/assign-membre','GroupsController@assignMembre');
+
+    Route::post('/upload-file','FilesController@postFile')-> name('post.file');
     
     
     // FIXTURES A LANCE DEPUIS LE DASHBOARD POUR PEUPLER LA BASE
