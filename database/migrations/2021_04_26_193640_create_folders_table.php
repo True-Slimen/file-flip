@@ -15,8 +15,24 @@ class CreateFoldersTable extends Migration
     {
         Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('file_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
+            $table->unsignedBigInteger('file_id');
+            $table->foreign('file_id')
+            ->references('id')
+            ->on('files')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
+            $table->unsignedBigInteger('folder_id');
+            $table->foreign('folder_id')
+            ->references('id')
+            ->on('folders')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
             $table->string('foldername');
             $table->string('folderpath');
             $table->timestamps();

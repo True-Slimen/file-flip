@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Group;
 use App\Member;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\User;
 
 class GroupsController extends Controller{
     public function showGroupPage(){
 
         $groups = Group::all();
+        //$groupId = Group::();
         $users = User::all();
         $members = Member::all();
 
+        $arrayGroup = [];
+
+        
+
+        $grouptests = Member::find(1)->user;
+
+        
+
         return view('/dashboard/group/group', [
-            'groups' => $groups, 'users' => $users, 'members' => $members
+            'groups' => $groups, 'users' => $users, 'members' => $members, 'grouptests' => $grouptests
         ]);
     }
 

@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/edit-group','GroupsController@showGroupPage');
 
+    Route::get('/edit-right','RightsController@showRightPage');
+
     Route::get('/upload-file','FilesController@showUploadPage');
 
     Route::get('/ged/root','Ged\GedController@gedRoot');
