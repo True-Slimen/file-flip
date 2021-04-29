@@ -113,7 +113,7 @@
 
                     <div class="form-group row mb-0">
                             <button type="submit" class="ml-3 col-4 mr-auto btn custom-btn-secondary">
-                                Créer
+                                Assigner
                             </button>
                     </div>
                 </form>

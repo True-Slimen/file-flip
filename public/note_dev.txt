@@ -1,0 +1,3 @@
+Note et bug, to do list, always you want fit here
+
+! On peut ajouter deux fois la même personne à un groupe

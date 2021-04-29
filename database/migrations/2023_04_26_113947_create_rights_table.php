@@ -15,6 +15,7 @@ class CreateRightsTable extends Migration
     {
         Schema::create('rights', function (Blueprint $table) {
             $table->id();
+            $table->integer('type');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')
             ->references('id')

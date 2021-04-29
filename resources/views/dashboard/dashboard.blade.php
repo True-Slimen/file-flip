@@ -15,13 +15,16 @@
         <div class="col-6 mt-4 mb-3">
             <div class="card wrapper p-3">
             <h4>Groupe</h4>
+            @if($members)
             Vous appartenez aux groupes :
             <ul>
-                <li>Groupe A</li>
+                @foreach($members as $member)
+                <li>{{ $member->group->name }}</li>
+                @endforeach
             </ul>
+            @endif
             <div class="row justify-content-around">
-                <a class="btn btn-outline-secondary col-4" href="/edit-group">Editer mes groupes</a>
-                <a class="btn btn-outline-secondary col-4" href="/edit-admin-group">Editer les groupes</a>
+                <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-group">Editer les groupes</a>
             </div>
             </div>
         </div>
@@ -38,13 +41,28 @@
         <div class="col-6 mt-2 mb-3">
             <div class="card wrapper p-3">
             <h4>Rôles</h4>
+            @if($roles)
             Vous possédez les rôles :
             <ul>
-                <li>Rôle A</li>
+                @foreach($roles as $role)
+                    @if($role->type == 10)
+                    <li>Admin</li>
+                    @elseif($role->type == 11)
+                    <li>Membre</li>
+                    @endif
+                @endforeach
             </ul>
+            @endif
             <div class="row justify-content-around">
-                <a class="btn btn-outline-secondary col-4" href="/edit-right">Editer mes rôles</a>
-                <a class="btn btn-outline-secondary col-4" href="/edit-right">Editer les rôles</a>
+                <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-role">Editer les rôles</a>
+            </div>
+            </div>
+        </div>
+        <div class="col-6 mt-2 mb-3">
+            <div class="card wrapper p-3">
+            <h4>Droits</h4>        
+            <div class="row justify-content-around">
+                <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-right">Editer les droits</a>
             </div>
             </div>
         </div>

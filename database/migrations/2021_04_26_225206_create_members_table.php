@@ -27,6 +27,7 @@ class CreateMembersTable extends Migration
             ->on('groups')
             ->onDelete('restrict')
             ->onUpdate('restrict');
+            $table->unique(['user_id', 'group_id']);
             $table->timestamps();
         });
     }

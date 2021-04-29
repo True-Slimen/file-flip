@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Member;
+use App\Right;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +14,11 @@ class DashboardController extends Controller{
     public function data(){
         $user_current_id =  Auth::user();
 
-        return view('/dashboard/dashboard', ['user_id' => $user_current_id]);
+        $members = Member::where('user_id', '=', $user_current_id->id)->get();
+
+        $roles = Right::where('user_id', '=', $user_current_id->id)->get();
+
+        return view('/dashboard/dashboard', ['user_id' => $user_current_id, 'members' => $members, 'roles' => $roles]);
     }
 
     /**

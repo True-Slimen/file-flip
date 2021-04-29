@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home');
 
+Route::view('/manuel', 'manuel');
+
+Route::view('/wiki', 'wiki');
+
 Route::view('/help', 'help');
 
 Route::view('/contact', 'contact');
@@ -36,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/edit-right','RightsController@showRightPage');
 
+    Route::get('/edit-role','RightsController@showRolePage');
+
     Route::get('/upload-file','FilesController@showUploadPage');
 
     Route::get('/ged/root','Ged\GedController@gedRoot');
@@ -44,7 +50,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/assign-membre','GroupsController@assignMembre');
 
-    Route::post('/assign-right','RightsController@assignRight');
+    Route::post('/assign-right-file','RightsController@assignRightFile');
+
+    Route::post('/assign-right-folder','RightsController@assignRightFolder');
+
+    Route::post('/assign-role','RightsController@assignRole');
     
     
     // FIXTURES A LANCE DEPUIS LE DASHBOARD POUR PEUPLER LA BASE

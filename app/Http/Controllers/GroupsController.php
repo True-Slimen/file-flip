@@ -45,10 +45,10 @@ class GroupsController extends Controller{
     }
     
     public function assignMembre(){
-
+        $members = Member::all();
         request()->validate([
             'username' => 'required',
-            'groupname' => 'required',
+            'groupname' => 'required'
         ]);
 
         $groupid = request('groupname');
