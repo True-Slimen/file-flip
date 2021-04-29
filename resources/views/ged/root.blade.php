@@ -17,13 +17,17 @@
     <div class=" mt-5 card modify-root-nav">
     <div class="row p-3">
         <div class="col-6 text-center">
+        <form method="POST" action="/create-folder">
+            <input type='text' id= 'folder_name' name='Nom du dossier:' required maxlength='20'>
             <button class="custom-btn-secondary">Creer un dossier ici</button>
+        </form>
         </div>
         <div class="col-6 text-center">
             <button class="custom-btn-secondary">Uploader un fichier ici</button>
         </div>
     </div>
 </div>
+<p>{{ $content }}</p>
 </section>
 
 
