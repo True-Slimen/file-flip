@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Member;
-use App\Right;
+use App\File;
 use App\User;
+use App\Right;
+use App\Folder;
+use App\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -17,6 +19,11 @@ class DashboardController extends Controller{
         $members = Member::where('user_id', '=', $user_current_id->id)->get();
 
         $roles = Right::where('user_id', '=', $user_current_id->id)->get();
+
+        $files = File::all();
+        $folders = Folder::all();
+        return view('/dashboard/dashboard', [
+            'files' => $files, 'folders' => $folders, 'users']);
 
         return view('/dashboard/dashboard', ['user_id' => $user_current_id, 'members' => $members, 'roles' => $roles]);
     }

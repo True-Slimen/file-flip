@@ -15,14 +15,14 @@
         <div class="col-6 mt-4 mb-3">
             <div class="card wrapper p-3">
             <h4>Groupe</h4>
-            @if($members)
+            @isset($members)
             Vous appartenez aux groupes :
             <ul>
                 @foreach($members as $member)
                 <li>{{ $member->group->name }}</li>
                 @endforeach
             </ul>
-            @endif
+            @endisset
             <div class="row justify-content-around">
                 <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-group">Editer les groupes</a>
             </div>
@@ -32,16 +32,18 @@
             <div class="card p-3 wrapper">
                 <h4>Fichiers enregistrés</h4>
                 Vous avez enregistré ces fichiers:
+                @foreach($files as $file)
                 <ul>
-                    <li><a href="#">tuto.php</a></li>
+                    <li><a>{{ $file -> filename }} </a></li>
                 </ul>
+                @endforeach
                 <a href="/upload-file">Enregistrer un fichier</a>
             </div>
         </div>
         <div class="col-6 mt-2 mb-3">
             <div class="card wrapper p-3">
             <h4>Rôles</h4>
-            @if($roles)
+            @isset($roles)
             Vous possédez les rôles :
             <ul>
                 @foreach($roles as $role)
@@ -52,7 +54,7 @@
                     @endif
                 @endforeach
             </ul>
-            @endif
+            @endisset
             <div class="row justify-content-around">
                 <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-role">Editer les rôles</a>
             </div>
