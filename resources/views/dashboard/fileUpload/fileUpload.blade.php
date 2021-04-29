@@ -4,17 +4,21 @@
 
 <section class="container section-top mb-5">
     <h1>Bienvenue sur l'upload</h1>
-
     <div class="container">
    
     <div class="panel panel-primary">
       <div class="panel-body">
    
         @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{{ $message }}</strong>
-        </div>
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+            </div>
+        @elseif ($message = Session::get('error'))
+            <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+            </div>
         @endif
   
         @if (count($errors) > 0)

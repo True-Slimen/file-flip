@@ -17,14 +17,11 @@ class GroupsController extends Controller{
 
         $arrayGroup = [];
 
-        
-
-        $grouptests = Member::find(1)->user;
 
         
 
         return view('/dashboard/group/group', [
-            'groups' => $groups, 'users' => $users, 'members' => $members, 'grouptests' => $grouptests
+            'groups' => $groups, 'users' => $users, 'members' => $members
         ]);
     }
 

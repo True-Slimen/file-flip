@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers\Ged;
 
-use App\Http\Controllers\Controller;
+use App\File;
+use App\Folder;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class GedController extends Controller{
     
     public function gedRoot(){
-        return view('/ged/root');
+        $files = File::all();
+        $folders = Folder::all();
+        return view('/ged/root', [
+            'files' => $files, "folders" => $folders
+        ]);
     }
+
+
 }

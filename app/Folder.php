@@ -12,7 +12,7 @@ class Folder extends Model
      * @var array
      */
     protected $fillable = [
-        'owner_id', 'type', 'foldername', 'folderpath'
+        'user_id', 'foldername', 'folderpath'
     ];
 
     public function member(){
