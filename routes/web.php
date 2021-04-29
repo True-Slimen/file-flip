@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/ged/root','Ged\GedController@gedRoot');
 
+    Route::post('/create-folder','Ged\GedController@createFolder');
+
     Route::post('/edit-group','GroupsController@createGroup');
 
     Route::post('/assign-membre','GroupsController@assignMembre');
