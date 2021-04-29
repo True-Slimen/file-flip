@@ -27,26 +27,25 @@ class GedController extends Controller{
 
 
         $foldername = request('foldername');
-        $parent_id = request('parent_folder');
-        $parent_deep = request('folderdeep');
+        $folder_array = request('parent_folder');
 
-        if($parent_deep == null)
-        {
-            $parent_deep = 1;
-        }
-        else{
-             $parent_deep= $parent_deep+1;
-        };
+        // if($parent_deep == null)
+        // {
+        //     $parent_deep = 1;
+        // }
+        // else{
+        //      $parent_deep= $parent_deep+1;
+        // };
         
-        $folder = new Folder();
-        $folder->foldername = $foldername;
-        $folder->owner_id = Auth::user()->id;
-        $folder->folderpath = null;
-        $folder->parent_folder = $parent_id;
-        $folder->deep = $parent_deep;
-        $folder->save();
+        // $folder = new Folder();
+        // $folder->foldername = $foldername;
+        // $folder->owner_id = Auth::user()->id;
+        // $folder->folderpath = null;
+        // $folder->parent_folder = $parent_id;
+        // $folder->deep = $parent_deep;
+        // $folder->save();
 
 
-        return view('/ged/root',['folder' => $foldername, 'folderlists'=>$folderlist]);
+        return view('/ged/root',['folder' => $foldername, 'folderlists'=>$folderlist, 'vartest' => $folder_array]);
     }
 }

@@ -23,6 +23,8 @@ class CreateFoldersTable extends Migration
             ->onUpdate('restrict');
             $table->string('foldername');
             $table->string('folderpath');
+            $table->integer('parent_folder');
+            $table->integer('position_folder');
             $table->timestamps();
         });
     }

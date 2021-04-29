@@ -16,8 +16,8 @@
     <div class="row">
         <strong>Dossiers</strong>
         <div class=" mt-3 card modify-root-nav mb-5">
-            @isset($foldertest)
-            <h1>{{$foldertest[0]}}</h1>
+            @isset($vartest)
+            <h1>{{$vartest}}</h1>
             @endisset
             <div class="row p-3">
                 <div class="col-6 text-center">
@@ -27,10 +27,9 @@
                         <select name="parent_folder" id="parent_folder" class="form-control" >
                             <option value="null">Root</option>
                             @foreach($folderlists as $folderlist)
-                            <option value="{{ $folderlist->id }}">{{ $folderlist }}</option>
+                            <option value="{{[$folderlist->id, $folderlist->deep]}}">{{ $folderlist }}</option>
                             @endforeach
                         </select>
-                        <input type='hidden' id='folderdeep' value='{{$folderlist->deep}}' name='folderdeep' required maxlength='20'>
                         
                         <button class="custom-btn-secondary" type='submit'>Creer un dossier ici</button>
                     </form>
