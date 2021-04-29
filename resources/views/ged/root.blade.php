@@ -17,7 +17,7 @@
         <strong>Dossiers</strong>
         <div class=" mt-3 card modify-root-nav mb-5">
             @isset($vartest)
-            <h1>{{$vartest}}</h1>
+            <h1>{{$vartest->id}}</h1>
             @endisset
             <div class="row p-3">
                 <div class="col-6 text-center">
@@ -27,7 +27,7 @@
                         <select name="parent_folder" id="parent_folder" class="form-control" >
                             <option value="null">Root</option>
                             @foreach($folderlists as $folderlist)
-                            <option value="{{[$folderlist->id, $folderlist->deep]}}">{{ $folderlist }}</option>
+                            <option value="{{$folderlist}}">{{ $folderlist->foldername }}</option>
                             @endforeach
                         </select>
                         
@@ -39,11 +39,6 @@
                 </div>
             </div>
         </div>
-        <!-- @isset($folderlists)
-        @foreach($folderlists as $folderlist)
-        <p>{{ $folderlist->foldername}}</p>
-        @endforeach
-        @endisset -->
         <div id="accordion">
             @foreach($folderlists as $folderlist)
             <div class="card mb-4">
@@ -51,6 +46,11 @@
                 <div class="card-header p-0" id="headingOne">
                     <button class="btn col-12" data-toggle="collapse" data-target="#collapse{{ $folderlist->id }}" aria-expanded="true" aria-controls="collapseOne">
                         <h4>{{ $folderlist->foldername }}</h4>
+                        @foreach($files as $file)
+                        <ul>
+                            <li><a>{{ $file -> filename }} </a></li>
+                        </ul>
+                        @endforeach
                     </button>
                 </div>
                 @endif
