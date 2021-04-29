@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/ged/root','Ged\GedController@gedRoot');
 
+    Route::post('/create-folder','Ged\GedController@createFolder');
+
     Route::post('/edit-group','GroupsController@createGroup');
 
     Route::post('/assign-membre','GroupsController@assignMembre');
@@ -55,6 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/assign-right-folder','RightsController@assignRightFolder');
 
     Route::post('/assign-role','RightsController@assignRole');
+    Route::post('/upload-file','FilesController@postFile')-> name('post.file');
     
     
     // FIXTURES A LANCE DEPUIS LE DASHBOARD POUR PEUPLER LA BASE
