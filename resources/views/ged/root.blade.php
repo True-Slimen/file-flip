@@ -24,13 +24,13 @@
                     <form method="POST" action="/create-folder">
                         @csrf
                         <input type='text' id='foldername' name='foldername' required maxlength='20'>
-                        <select name="parent_folder" id="parent_folder" class="form-control" >
+                        <select name="parent_folder" id="parent_folder" class="form-control">
                             <option value="null">Root</option>
                             @foreach($folderlists as $folderlist)
                             <option value="{{$folderlist}}">{{ $folderlist->foldername }}</option>
                             @endforeach
                         </select>
-                        
+
                         <button class="custom-btn-secondary" type='submit'>Creer un dossier ici</button>
                     </form>
                 </div>
@@ -44,18 +44,35 @@
             <div class="card mb-4">
                 @if($folderlist->parent_folder==null)
                 <div class="card-header p-0" id="headingOne">
-                    <button class="btn col-12" data-toggle="collapse" data-target="#collapse{{ $folderlist->id }}" aria-expanded="true" aria-controls="collapseOne">
-                        <h4>{{ $folderlist->foldername }}</h4>
-                        @foreach($files as $file)
+                    <div class="card-header p-0" id="headingOne">
+                        <button class="btn col-12" data-toggle="collapse" data-target="#collapse{{ $folderlist->id }}" aria-expanded="true" aria-controls="collapseOne">
+                            <h4>{{ $folderlist->foldername }}</h4>
+                        </button>
+                    </div>
+                    <div id="collapse{{ $folderlist->id }}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        @isset($filelist)
+                        @foreach($filelist as $file)
+                        @if($file->folder_id==$folderlist->id)
                         <ul>
-                            <li><a>{{ $file -> filename }} </a></li>
+                            <a href="{{url('/')}}/uploads/{{ $file->filename}}" target="_blank">{{ $file->filename }}</a>
                         </ul>
+                        @endif
                         @endforeach
-                    </button>
+                        @endisset
+                    </div>
                 </div>
                 @endif
             </div>
             @endforeach
+            @isset($filelist)
+            @foreach($filelist as $file)
+            @if($file->folder_id==null)
+            <ul>
+                <a href="{{url('/')}}/uploads/{{ $file->filename}}" target="_blank">{{ $file->filename }}</a>
+            </ul>
+            @endif
+            @endforeach
+            @endisset
         </div>
     </div>
 </section>

@@ -11,9 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class DashboardController extends Controller{
+class DashboardController extends Controller
+{
 
-    public function data(){
+    public function data()
+    {
         $user_current_id =  Auth::user();
 
         $members = Member::where('user_id', '=', $user_current_id->id)->get();
@@ -22,10 +24,25 @@ class DashboardController extends Controller{
 
         $files = File::all();
         $folders = Folder::all();
-        return view('/dashboard/dashboard', [
-            'files' => $files, 'folders' => $folders, 'users']);
 
-        return view('/dashboard/dashboard', ['user_id' => $user_current_id, 'members' => $members, 'roles' => $roles]);
+        $right = Right::all();
+        $user = Auth::user();
+        // $isadmin = Right::whereRaw('user_id=', $user->id);
+
+        $isadmin = Right::where('user_id', $user->id)
+            ->where('type', 10)
+            ->get();
+
+        $test = gettype($isadmin);
+
+        return view('/dashboard/dashboard', ['user_id' => $user_current_id, 'members' => $members, 'roles' => $roles, 'files' => $files, 'folders' => $folders, 'users', 'isadmin'=>$isadmin]);
+    }
+
+    public function authorizeRightsEdit()
+    {
+        
+
+            
     }
 
     /**
@@ -37,7 +54,8 @@ class DashboardController extends Controller{
      * 
      * @return void
      */
-    public function createMassUsers(){
+    public function createMassUsers()
+    {
 
         $user = new User();
         $user->firstname = 'Lulu';
@@ -59,7 +77,7 @@ class DashboardController extends Controller{
         $user->email = 'mishkanov@gmail.com';
         $user->password = '$10$hi7N7wGgt/hgWBRxCQWqGeeI9HQJuszdam/R7OopREbZbJg3PIds2';
         $user->save();
-        
+
         $user = new User();
         $user->firstname = 'Adelaïde';
         $user->lastname = 'Menya';
@@ -68,8 +86,5 @@ class DashboardController extends Controller{
         $user->save();
 
         return view('/dashboard/dashboard');
-
     }
-
-    
 }

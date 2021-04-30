@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ged;
 
 use App\File;
+use App\Right;
 use App\Folder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,24 +32,27 @@ class GedController extends Controller{
         $foldername = request('foldername');
         $folder_array = request('parent_folder');
         $jObj = json_decode($folder_array);
-        $parent_id = $jObj->id;
-        $parent_deep = $jObj->parent_folder;
-
-        // if($parent_deep == null)
-        // {
-        //     $parent_deep = 1;
-        // }
-        // else{
-        //      $parent_deep= $parent_deep+1;
-        // };
+        
+        if($jObj==null)
+        {
+            $parent_id = 0;
+            $parent_deep = 1;
+        }
+        else{
+            $parent_id = $jObj->id;
+            $parent_deep = $jObj->position_folder;
+        };
         
         $folder = new Folder();
         $folder->foldername = $foldername;
         $folder->owner_id = Auth::user()->id;
-        $folder->folderpath = null;
+        $folder->folderpath = 'null';
         $folder->parent_folder = $parent_id;
         $folder->position_folder = $parent_deep;
         $folder->save();
+
+        $rights = new Right();
+        
 
 
         return view('/ged/root',['folder' => $foldername, 'folderlists'=>$folderlist, 'vartest' => $jObj]);

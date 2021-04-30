@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,8 +11,10 @@ class FilesController extends Controller
 {
     public function showUploadPage(){
 
+        $folders = Folder::all();
 
-        return view('/dashboard/fileUpload/fileUpload');
+
+        return view('/dashboard/fileUpload/fileUpload', ['folderlists'=>$folders]);
     }
 
     public function postFile(Request $request)

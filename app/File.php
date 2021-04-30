@@ -12,7 +12,7 @@ class File extends Model
      * @var array
      */
     protected $fillable = [
-        'owner_id', 'type', 'filename', 'filepath', 'folder_id'
+        'owner_id', 'type', 'filename', 'filepath', 'folder_id',
     ];
 
     public function member(){
@@ -21,5 +21,9 @@ class File extends Model
 
     public function user(){
         return $this->belongsTo('App\User');
+    }
+
+    public function folder(){
+        return $this->belongsTo('App\Folder');
     }
 }

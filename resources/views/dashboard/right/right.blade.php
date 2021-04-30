@@ -60,9 +60,11 @@
 
                         <div class="">
                         <select name="filename" id="filename" class="form-control @error('filename') is-invalid @enderror" >
+                            @isset($files)
                             @foreach($files as $file)
-                            <option value="{{ $group->id}}">{{ $file->filename}}</option>
+                            <option value="{{ $file->id}}">{{ $file->filename}}</option>
                             @endforeach
+                            @endisset
                         </select>
             
                             @error('filename')
@@ -127,9 +129,11 @@
 
                         <div class="">
                         <select name="foldername" id="foldername" class="form-control @error('foldername') is-invalid @enderror" >
+                            @isset($folders)
                             @foreach($folders as $folder)
-                            <option value="{{ $group->id}}">{{ $folder->foldername}}</option>
+                            <option value="{{ $folder->id}}">{{ $folder->foldername}}</option>
                             @endforeach
+                            @endisset
                         </select>
             
                             @error('foldername')

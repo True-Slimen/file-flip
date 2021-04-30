@@ -12,7 +12,7 @@ class Folder extends Model
      * @var array
      */
     protected $fillable = [
-        'owner_id', 'foldername', 'folderpath', 'parent_folder', 'deep'
+        'owner_id', 'foldername', 'folderpath', 'parent_folder', 'position_folder'
     ];
 
     public function user(){
@@ -21,5 +21,9 @@ class Folder extends Model
 
     public function right(){
         return $this->hasMany('App\Right');
+    }
+
+    public function file(){
+        return $this->hasMany('App\File');
     }
 }

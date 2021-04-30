@@ -14,18 +14,18 @@
         </div>
         <div class="col-6 mt-4 mb-3">
             <div class="card wrapper p-3">
-            <h4>Groupe</h4>
-            @isset($members)
-            Vous appartenez aux groupes :
-            <ul>
-                @foreach($members as $member)
-                <li>{{ $member->group->name }}</li>
-                @endforeach
-            </ul>
-            @endisset
-            <div class="row justify-content-around">
-                <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-group">Editer les groupes</a>
-            </div>
+                <h4>Groupe</h4>
+                @isset($members)
+                Vous appartenez aux groupes :
+                <ul>
+                    @foreach($members as $member)
+                    <li>{{ $member->group->name }}</li>
+                    @endforeach
+                </ul>
+                @endisset
+                <div class="row justify-content-around">
+                    <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-group">Editer les groupes</a>
+                </div>
             </div>
         </div>
         <div class="col-6 mt-4 mb-3">
@@ -42,30 +42,38 @@
         </div>
         <div class="col-6 mt-2 mb-3">
             <div class="card wrapper p-3">
-            <h4>Rôles</h4>
-            @isset($roles)
-            Vous possédez les rôles :
-            <ul>
-                @foreach($roles as $role)
+                <h4>Rôles</h4>
+                @isset($roles)
+                Vous possédez les rôles :
+                <ul>
+                    @foreach($roles as $role)
                     @if($role->type == 10)
                     <li>Admin</li>
                     @elseif($role->type == 11)
                     <li>Membre</li>
                     @endif
-                @endforeach
-            </ul>
-            @endisset
-            <div class="row justify-content-around">
-                <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-role">Editer les rôles</a>
-            </div>
+                    @endforeach
+                </ul>
+                @endisset
+                <div class="row justify-content-around">
+                    @foreach($isadmin as $right)
+                    @if($right->type==10)
+                    <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-role">Editer les rôles</a>
+                    @endif
+                    @endforeach
+                </div>
             </div>
         </div>
         <div class="col-6 mt-2 mb-3">
             <div class="card wrapper p-3">
-            <h4>Droits</h4>        
-            <div class="row justify-content-around">
-                <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-right">Editer les droits</a>
-            </div>
+                <h4>Droits</h4>
+                <div class="row justify-content-around">
+                    @foreach($isadmin as $right)
+                    @if($right->type==10)
+                    <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-right">Editer les droits</a>
+                    @endif
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

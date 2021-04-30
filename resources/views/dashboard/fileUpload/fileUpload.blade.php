@@ -36,6 +36,12 @@
         <form action="{{ route('post.file') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
+            <select name="parent_folder" id="parent_folder" class="form-control" >
+                <option value="null">Root</option>
+                @foreach($folderlists as $folderlist)
+                <option value="{{$folderlist}}">{{ $folderlist->foldername }}</option>
+                @endforeach
+            </select>
   
                 <div class="col-md-6">
                     <input type="file" name="file" class="form-control">

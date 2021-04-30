@@ -21,6 +21,12 @@ class CreateFilesTable extends Migration
             ->on('users')
             ->onDelete('restrict')
             ->onUpdate('restrict');
+            $table->unsignedBigInteger('folder_id')->nullable();
+            $table->foreign('folder_id')
+            ->references('id')
+            ->on('folders')
+            ->onDelete('restrict')
+            ->onUpdate('restrict');
             $table->string('type');
             $table->string('filename');
             $table->string('filepath');
