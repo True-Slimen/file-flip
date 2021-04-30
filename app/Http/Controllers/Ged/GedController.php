@@ -100,6 +100,41 @@ class GedController extends Controller{
         
 
 
-        return view('/ged/root',['folder_id' => $folder_id, 'folderlists'=> $folder, 'filelist'=> $file, 'isAdmins'=> $isAdmin]);
+        return back();
+    }
+
+
+    public function DeleteFile(){
+        $userData = Auth::user();
+        $rights = Right::all();
+        $isAdmin = Right::where('user_id', $userData->id)
+            ->where('type', 4)
+            ->get();
+
+        $folderlist = Folder::all();
+        $filelist = File::all();
+        $folder = Folder::all();
+        $file = File::all();
+
+        $file_id = request('file_id');
+
+        $fileDeletes = File::where('id', $file_id)
+            ->get();
+
+        
+
+        foreach($fileDeletes as $fileDelete){
+            
+                Right::where('file_id', $fileDelete->id)->delete();
+                File::where('id', $fileDelete->id)->delete();
+        }
+    
+
+
+        
+        
+
+
+        return back();
     }
 }

@@ -66,15 +66,32 @@
                         </div>
                     </div>
                     <div id="collapse{{ $folderlist->id }}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <ul>
                         @isset($filelist)
                         @foreach($filelist as $file)
                         @if($file->folder_id==$folderlist->id)
-                        <ul>
-                            <a href="{{url('/')}}/uploads/{{ $file->filename}}" target="_blank">{{ $file->filename }}</a>
-                        </ul>
+                        <li>
+                            <div class="row">
+                            <a class="col-11" href="{{url('/')}}/uploads/{{ $file->filename}}" target="_blank">{{ $file->filename }}</a>
+                            @isset($isAdmins)
+                            @foreach($isAdmins as $isAdmin)
+                             @if($isAdmin->type == 4 && $isAdmin->file_id ==$file->id )
+                             <form class="col-1" method="POST" action="/delete-file">
+                                @csrf
+
+                                <button name="file_id" value="{{ $file->id }}" class="btn btn-danger col-12" type='submit'>
+                                    <h4>X</h4>
+                            </form>
+                             @endif
+                            @endforeach
+                            
+                            @endisset
+                            </div>
+                        </li>
                         @endif
                         @endforeach
                         @endisset
+                    <ul>
                     </div>
                 </div>
                 @endif

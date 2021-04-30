@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/delete-folder','Ged\GedController@deleteFolder');
 
+    Route::post('/delete-file','Ged\GedController@deleteFile');
+
 
     Route::post('/edit-group','GroupsController@createGroup');
 
