@@ -6,6 +6,9 @@
     <div class="row">
         <div class="col-6">
             <h2>Gestion des droits</h2>
+            @isset($test)
+            {{ $test}}
+            @endisset
         </div>
         <div class="col-6 text-right">
             <a class="btn my-3 custom-btn-secondary" href="/dashboard">Dashboard</a>

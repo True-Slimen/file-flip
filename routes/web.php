@@ -33,6 +33,8 @@ Route::view('/sign-up', '/sign-up/index');
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
+
+    
     
     Route::get('/dashboard','DashboardController@data');
 
@@ -44,17 +46,25 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/upload-file','FilesController@showUploadPage');
 
+
     Route::get('/ged/root','Ged\GedController@gedRoot');
 
     Route::post('/create-folder','Ged\GedController@createFolder');
+
+    Route::post('/delete-folder','Ged\GedController@deleteFolder');
+
 
     Route::post('/edit-group','GroupsController@createGroup');
 
     Route::post('/assign-membre','GroupsController@assignMembre');
 
+
     Route::post('/assign-right-file','RightsController@assignRightFile');
 
     Route::post('/assign-right-folder','RightsController@assignRightFolder');
+    
+    
+
 
     Route::post('/assign-role','RightsController@assignRole');
     Route::post('/upload-file','FilesController@postFile')-> name('post.file');

@@ -10996,6 +10996,10 @@ h6 {
   border-radius: 50px;
 }
 
+.btn-danger h4 {
+  color: white !important;
+}
+
 .custom-btn-secondary {
   padding: 10px 20px;
   font-size: 18px !important;

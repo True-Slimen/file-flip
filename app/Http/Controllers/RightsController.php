@@ -27,6 +27,7 @@ class RightsController extends Controller
         ]);
     }
 
+
     public function showRolePage(){
 
         $groups = Group::all();
@@ -42,7 +43,7 @@ class RightsController extends Controller
     }
 
     public function assignRole(){
-
+        
         request()->validate([
             'username' => 'required',
             'rolename' => 'required',
@@ -62,12 +63,22 @@ class RightsController extends Controller
     }
     
     public function assignRightFile(){
+        $files = File::all();
+        $folders = Folder::all();
+        $users = User::all();
+
+        $rightslist = [
+            'Voir', 'Lire', 'Ecrire', 'Supprimer', 'Déplacer', 'Copier'
+        ];
 
         request()->validate([
             'username' => 'required',
             'rightname' => 'required',
             'filename' => 'required',
         ]);
+
+        $test = "teeeest";
+
 
         $rightid = request('rightname');
         $rightid = $rightid + 1;
@@ -86,21 +97,34 @@ class RightsController extends Controller
 
     public function assignRightFolder(){
 
+        $files = File::all();
+        $folders = Folder::all();
+        $users = User::all();
+
+        $rightslist = [
+            'Voir', 'Lire', 'Ecrire', 'Supprimer', 'Déplacer', 'Copier'
+        ];
+
+
+
         request()->validate([
             'username' => 'required',
-            'foldertname' => 'required',
-            'filename' => 'required',
+            'rightname' => 'required',
+            'foldername' => 'required',
         ]);
 
-        $rightid = request('foldertname');
+        $test = "teeeest";
+
+
+        $rightid = request('rightname');
         $rightid = $rightid + 1;
         $userid = request('username');
-        $fileid = request('foldername');
+        $folderid = request('foldername');
 
         $right = new Right();
         $right->type = $rightid;
         $right->user_id = $userid;
-        $right->folder_id = $fileid;
+        $right->folder_id = $folderid;
         $right->save();
 
 

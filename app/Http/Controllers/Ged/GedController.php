@@ -14,6 +14,15 @@ class GedController extends Controller{
     
     public function gedRoot(){
 
+        //'Voir', 'Lire', 'Ecrire', 'Supprimer', 'Déplacer', 'Copier'
+
+        $userData = Auth::user();
+        $rights = Right::all();
+
+        $isAdmin = Right::where('user_id', $userData->id)
+            ->where('type', 4)
+            ->get();
+
         Storage::disk('uploads')->put('example.txt', 'Contents');
         $folder = Folder::all();
         $file = File::all();
@@ -21,7 +30,7 @@ class GedController extends Controller{
         $content = Storage::disk('uploads')->get('example.txt');
 
 
-        return view('/ged/root',['folderlists'=> $folder, 'filelist'=> $file]);
+        return view('/ged/root',['folderlists'=> $folder, 'filelist'=> $file, 'isAdmins'=> $isAdmin]);
     }
 
     public function createFolder(){
@@ -50,11 +59,47 @@ class GedController extends Controller{
         $folder->parent_folder = $parent_id;
         $folder->position_folder = $parent_deep;
         $folder->save();
+        
 
-        $rights = new Right();
+        return back();
+    }
+
+    public function DeleteFolder(){
+        $userData = Auth::user();
+        $rights = Right::all();
+        $isAdmin = Right::where('user_id', $userData->id)
+            ->where('type', 4)
+            ->get();
+
+        $folderlist = Folder::all();
+        $filelist = File::all();
+        $folder = Folder::all();
+        $file = File::all();
+
+        $folder_id = request('folder_id');
+
+        $fileDeletes = File::where('folder_id', $folder_id)
+            ->get();
+
+        
+
+        foreach($fileDeletes as $fileDelete){
+            
+                Right::where('file_id', $fileDelete->id)->delete();
+                File::where('id', $fileDelete->id)->delete();
+        }
+    
+
+        
+        Right::where('folder_id', $folder_id)->delete();
+
+        Folder::where('id', $folder_id)->delete();
+
+
+        
         
 
 
-        return view('/ged/root',['folder' => $foldername, 'folderlists'=>$folderlist, 'vartest' => $jObj]);
+        return view('/ged/root',['folder_id' => $folder_id, 'folderlists'=> $folder, 'filelist'=> $file, 'isAdmins'=> $isAdmin]);
     }
 }
