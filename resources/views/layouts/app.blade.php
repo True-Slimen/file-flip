@@ -32,6 +32,9 @@
                     <a class="nav-link nav-hr" href="/">Accueil</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link nav-hr" href="/ged/root">Explore</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link nav-hr" href="/wiki">Un coup de pouce ?</a>
                 </li>
                 <li class="nav-item">
@@ -60,6 +63,9 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="/dashboard">
                                     {{ __('Dashboard') }}
+                                </a>
+                                <a class="dropdown-item" href="/upload-file">
+                                    {{ __('Upload') }}
                                 </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

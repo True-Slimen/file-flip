@@ -55,6 +55,16 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/delete-file','Ged\GedController@deleteFile');
 
+    Route::post('/copy-file','Ged\GedController@copyFile');
+
+    Route::post('/move-folder','Ged\GedController@moveFolder');
+
+    Route::post('/move-file','Ged\GedController@moveFile');
+    
+    Route::post('/rename-file','Ged\GedController@renameFile');
+    
+    Route::post('/rename-folder','Ged\GedController@renameFolder');
+
 
     Route::post('/edit-group','GroupsController@createGroup');
 

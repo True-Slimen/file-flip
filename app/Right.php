@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Right extends Model
 {
+        /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'id', 'type', 'user_id', 'group_id', 'folder_id','file_id'
+    ];
     public function group(){
         return $this->belongsTo('App\Group');
     }
