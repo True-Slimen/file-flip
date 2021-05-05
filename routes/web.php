@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/assign-role','RightsController@assignRole');
+    
     Route::post('/upload-file','FilesController@postFile')-> name('post.file');
     
     

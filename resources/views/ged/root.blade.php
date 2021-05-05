@@ -37,7 +37,7 @@ function myFunction() {
 
                     <form method="POST" action="/create-folder">
                         @csrf
-                        <input type='text' id='foldername' name='foldername' required maxlength='20'>
+                        <input type='text' id='foldername' name='foldername' required maxlength='20' placeholder="Nom du nouveau dossier">
                         <select name="parent_folder" id="parent_folder" class="form-control">
                             <option value="null">Root</option>
 
@@ -160,30 +160,126 @@ function myFunction() {
                                     @foreach($rights as $right)
 
                                         @if( $right->file_id == $file->id && $right->type == 4 )
-                                        <form class="col-1" method="POST" action="/delete-file">
-                                            @csrf
-                                            <button name="file_id" value="{{ $file->id }}" class="btn btn-danger col-12" type='submit'>
-                                                <h4>X</h4>
-                                        </form>
+                                            <form class="col-1" method="POST" action="/delete-file">
+                                                @csrf
+                                                <button name="file_id" value="{{ $file->id }}" class="btn btn-danger btn-sm" type='submit'>
+                                                    <h4>X</h4>
+                                            </form>
 
                                         @elseif( $right->file_id == $file->id && $right->type == 6 )
 
-                                        <form class="col-1" method="POST" action="">
-                                            @csrf
-                                            <button name="file_id" value="{{ $file->id }}" class="btn btn-warning col-12" onclick="myFunction()">
-                                                <h4>X</h4>
-                                                <div class="popup"  >
-                                                    <span class="popuptext" id="myPopup" hidden>Popup text...</span>
-                                                </div>
-                                        </form>
+                                            <form class="col-1" method="POST" action="/copy-file">
+                                                @csrf
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalCopy">
+                                                    Copier
+                                                </button>
+                                                <div class="modal fade" id="modalCopy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Copier ce fichier</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form>
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="col-form-label">Dossier cible</label>
+                                                                    <select name="parent_folder" id="parent_folder" class="form-control">
+                                                                        <option value="null">Root</option>
 
+                                                                        @foreach($folderlists as $folderlist)
+
+                                                                        <option value="{{$folderlist -> id}}, {{$file -> id}}">{{ $folderlist->foldername }}</option>
+
+                                                                        @endforeach
+                                                                        
+                                                                    </select>
+                                                                </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary" type="submit">Copier</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        @elseif($right->file_id == $file->id && $right->type == 3 )
+                                            <form class="col-1" method="POST" action="/move-file">
+                                                @csrf
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalMove">
+                                                    Déplacer
+                                                </button>
+                                                <div class="modal fade" id="modalMove" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Déplacer ce fichier</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form>
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="col-form-label">Dossier cible</label>
+                                                                    <select name="parent_folder" id="parent_folder" class="form-control">
+                                                                        <option value="null">Root</option>
+
+                                                                        @foreach($folderlists as $folderlist)
+
+                                                                        <option value="{{$folderlist -> id}}, {{$file -> id}}">{{ $folderlist->foldername }}</option>
+
+                                                                        @endforeach
+                                                                        
+                                                                    </select>
+                                                                </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary" type="submit">Déplacer</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        @elseif($right->file_id == $file->id && $right->type == 5 )
+                                            <form class="col-1" method="POST" action="/rename-file">
+                                                    @csrf
+                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalRename">
+                                                        Renommer
+                                                    </button>
+                                                    <div class="modal fade" id="modalRename" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Renommer ce fichier</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form>
+                                                                    <div class="form-group">
+                                                                        <label for="recipient-name" class="col-form-label">Nouveau nom</label>
+                                                                        <input type="text" class="form-control" id="recipient-name">
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-primary " type="submit">Renommer</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                         @endif
                                     @endforeach
-                                    <button name="file_id" value="{{ $file->id }}" class="btn btn-warning col-12" onclick="myFunction()">
-                                            <h4>X</h4>
-                                            <div class="popup">
-                                                <span class="popuptext" id="myPopup" >Popup text...</span>
-                                            </div>
                                 @endisset
                                     </div>
                                 </li>
@@ -208,12 +304,13 @@ function myFunction() {
             <button type="button" class="close" data-dismiss="alert">×</button>
                 <strong>{{ $message }}</strong>
         </div>
-        @elseif ($message = Session::get('error'))
+@elseif ($message = Session::get('error'))
             <div class="alert alert-danger alert-block">
                 <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>{{ $message }}</strong>
             </div>
-        @endif
+@endif
+
 
 
 @endsection
