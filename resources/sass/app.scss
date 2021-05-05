@@ -36,6 +36,10 @@ h4,h5,h6{
     font-size: 19px!important;
 }
 
+.container{
+    width: 1240px!important;
+}
+
 .primary-font{
     font-family: Lexend Deca;
 }
@@ -66,7 +70,7 @@ h4,h5,h6{
 .custom-btn-secondary{
     padding: 10px 20px;
     font-size: 18px!important;
-    color: #5c5c5c!important;
+    color: #9c9c9c!important;
     background-color: white;
     border: 1px solid #5c5c5c;
     border-radius: 50px;
@@ -76,7 +80,7 @@ h4,h5,h6{
 .custom-btn-secondary:hover{
     color: white!important;
     border: 1px solid white;
-    background-color: #5c5c5c;
+    background-color: #9c9c9c;
     border-radius: 50px;
     text-decoration: none;
 }
@@ -86,12 +90,26 @@ h4,h5,h6{
     box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.11);
 }
 
+.hr-vertical{
+        height: 100%!important;
+        width: 1px!important;
+        border-left: 1px solid #d2d2d2;
+    }
+
 label{
     font-size: 16px!important;
 }
 
 input{
-    border-radius: 50px!important; 
+    border-radius: 50px!important;
+    border: 1px solid #9c9c9c;
+    padding: 5px 10px;
+}
+
+select{
+    border-radius: 50px!important;
+    border: 1px solid #9c9c9c;
+    padding: 5px 10px;
 }
 
 .section-top{
@@ -206,6 +224,25 @@ footer{
 .regular-section{
     margin: 80px auto;
 }
+
+/* GED */
+.edit-file-wrapper{
+    form{
+        display: inline-block!important;
+    }
+
+    button{
+        padding: 0 5px!important;
+    }
+}
+
+.file-list{
+    a{
+        color: #5c5c5c;
+
+    }
+}
+
 
 /* FORM */
 form{

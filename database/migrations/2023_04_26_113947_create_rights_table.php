@@ -42,6 +42,40 @@ class CreateRightsTable extends Migration
             ->onUpdate('restrict');
             $table->timestamps();
         });
+
+        DB::table('rights')->insert(
+            [
+                [
+                    'type' => '10',
+                
+                
+                    'user_id' => '1'
+                ],
+                [
+                    'type' => '11',
+                
+                
+                    'user_id' => '2'
+                ],
+                [
+                    'type' => '11',
+                
+                
+                    'user_id' => '3'
+                ],[
+                    'type' => '11',
+                
+                
+                    'user_id' => '4'
+                ],[
+                    'type' => '11',
+                
+                
+                    'user_id' => '5'
+                ]
+            ]
+        );
+
     }
 
     /**

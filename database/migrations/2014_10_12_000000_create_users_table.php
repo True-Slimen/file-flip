@@ -22,6 +22,71 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        DB::table('users')->insert(
+            [            
+                [
+                    'email' => 'admin@mail.com',
+                
+                
+                    'firstname' => 'admin',
+                    
+                    
+                    'lastname' => 'admin',
+                    
+                
+                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                ],
+                [
+                    'email' => 'pineau@mail.com',
+                
+                
+                    'firstname' => 'Lulu',
+                    
+                    
+                    'lastname' => 'Pineau',
+                    
+                
+                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                ],
+                [
+                    'email' => 'patral@mail.com',
+                
+                
+                    'firstname' => 'Bob',
+                    
+                    
+                    'lastname' => 'Patral',
+                    
+                
+                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                ],
+                [
+                    'email' => 'mishkanov@mail.com',
+                
+                
+                    'firstname' => 'Igor',
+                    
+                    
+                    'lastname' => 'Mishkanov',
+                    
+                
+                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                ],
+                [
+                    'email' => 'adelaïde@mail.com',
+                
+                
+                    'firstname' => 'Adelaïde',
+                    
+                    
+                    'lastname' => 'Menya',
+                    
+                
+                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                ]
+            ]
+        );
     }
 
     /**
