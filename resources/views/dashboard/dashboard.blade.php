@@ -4,7 +4,7 @@
 
 <section class="container section-top mb-5">
     <h1>Bienvenue sur le Dashboard</h1>
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum, doloremque dolores doloribus culpa id debitis sed veniam? Nam numquam, assumenda enim unde ex blanditiis ducimus, sit nostrum est soluta repudiandae.</p>
+    <p>Explorez vos fichiers, ajoutez-en à votre espaces, creez et gérer vos groupes. Manager les droits relatifs à vos fichiers afin d'avoir un contrôle total sur leur visibilité.</p>
     <a href="/dashboard/createfixtures" class="btn btn-success">Créer des utilisateurs</a>
 </section>
 <section class="custom-card container regular-section">

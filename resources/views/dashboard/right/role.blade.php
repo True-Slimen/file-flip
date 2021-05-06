@@ -85,16 +85,6 @@
             </div>
         </div>
     </div>
-    <div class=" mt-5 card modify-root-nav">
-    <div class="row p-3">
-        <div class="col-6 text-center">
-            <button class="custom-btn-secondary">Creer un dossier ici</button>
-        </div>
-        <div class="col-6 text-center">
-            <button class="custom-btn-secondary">Uploader un fichier ici</button>
-        </div>
-    </div>
-</div>
 </section>
 
 

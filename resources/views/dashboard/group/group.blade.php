@@ -8,7 +8,7 @@
             <h2>Gestion des groupes</h2>
         </div>
         <div class="col-6 text-right">
-            <a class="btn my-3 custom-btn-secondary" href="/dashboard">Dashboard</a>
+            <a class="btn my-3 custom-btn-secondary" href="/dashboard">Retour au Dashboard</a>
         </div>
     </div>
 </section>
@@ -119,16 +119,13 @@
                 </form>
         </div>
     </div>
-    <div class=" mt-5 card modify-root-nav">
-    <div class="row p-3">
-        <div class="col-6 text-center">
-            <button class="custom-btn-secondary">Creer un dossier ici</button>
-        </div>
-        <div class="col-6 text-center">
-            <button class="custom-btn-secondary">Uploader un fichier ici</button>
+    <div class=" mt-6 card modify-root-nav text-center">
+        <div class="text-center">
+            <div class=" text-center">
+                <button class="custom-btn-secondary ">Uploader un fichier</button>
+            </div>
         </div>
     </div>
-</div>
 </section>
 
 
