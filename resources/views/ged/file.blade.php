@@ -1,7 +1,12 @@
 
                             <ul>
                                 <li class="row file-list">
-                                    <a class="col-6" href="{{url('/')}}/uploads/{{ $file->filename}}" target="_blank">{{ $file->filename }}</a>
+                                    @if($file->folder_id==null)
+                                        <a class="col-6" href="{{url('/')}}/uploads/{{ $file->filename}}" target="_blank">{{ $file->filename }}</a>
+                                    @else
+                                        <a class="col-6" href="{{url('/')}}/{{$file->shortpath}}/{{ $file->filename}}" target="_blank">{{ $file->filename }}</a>
+
+                                    @endif
                                 @isset($rights)
                                     <div class="col-3 ml-auto edit-file-wrapper row">
                                         @foreach($rights as $right)

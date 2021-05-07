@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/ged/root','Ged\GedController@gedRoot');
 
+    Route::get('/ged/folder/{id}','Ged\FolderController@gedFolder');
+
     Route::get('/ged/editFile','Ged\GedController@getFileContent');
 
     Route::get('/ged/edit','Ged\GedController@getFileContent');

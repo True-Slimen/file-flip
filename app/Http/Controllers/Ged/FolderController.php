@@ -12,11 +12,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Storage;
 
-class GedController extends Controller{
+class FolderController extends Controller{
     
-    public function gedRoot(){
+    public function gedFolder(){
 
         //'Voir', 'Lire', 'Ecrire', 'Supprimer', 'Déplacer', 'Copier'
+
+        $currentURL = url()->current();
+        $targetFolderId = basename($currentURL);
+
+        $targetFolder = Folder::where('id', $targetFolderId) -> first();
 
         $userData = Auth::user();
         $rights = Right::all();
@@ -25,15 +30,14 @@ class GedController extends Controller{
             ->where('type', 10)
             ->get();
         
-       
+        $allFoldersList = Folder::all();
 
-        Storage::disk('uploads')->put('example.txt', 'Contents');
-        $folder = Folder::all();
-        $file = File::all();
+        $folderList = Folder::where('parent_folder', $targetFolder->id) -> get();
+        $fileList = File::where('folder_id', $targetFolder->id) -> get();
 
         //$content = Storage::disk('uploads')->get('example.txt');
 
-        return view('/ged/root',['folderlists'=> $folder, 'filelist'=> $file, 'isAdmins'=> $isAdmin, 'rights' => $rights]);
+        return view('/ged/folder',['targetFolder'=>$targetFolder,'folderList'=> $folderList, 'fileList'=> $fileList, 'isAdmins'=> $isAdmin, 'rights' => $rights, 'folderlists'=>$allFoldersList]);
     }
 
     public function createFolder()
@@ -273,7 +277,7 @@ class GedController extends Controller{
         $new_path =  $file -> filepath . '\\' . $new_name . '.' . $type;
 
         //renomme physiquement le fichier
-        Storage::disk('uploads') -> move($file_name, $new_name); 
+        Storage::disk('uploads') -> move($file_name, $new_name . "." . $type); 
 
         //renomme le fichier en base 
         $file -> filepath = $new_path;
@@ -290,17 +294,20 @@ class GedController extends Controller{
         $new_name = request('folder_name'); //nouveau nom du fichier 
         $folder = Folder::find($folder_id);
         $folder_path = $folder -> folderpath;
+        $folders_path = "C:\laragon\www\\file-flip\public\uploads\\toto\\ze\\sd\\po";
         
         $folder_name = $folder -> foldername;
         $folder_parent_id = $folder -> parent_folder;
         $len_folder_root= strlen(public_path('uploads'));
+        $len_folder_name= strlen($folder_name);
+        $pathq = substr($folders_path, $len_folder_root);
         $path = substr($folder_path, $len_folder_root);
         if($folder_parent_id != 0){
             $len_name =  strlen($folder_name);
             $original_path = substr($folder_path,0, -$len_name);
             //$new_path = substr($folder_path, 0, -$len_folder_root); // $folder_path - $fold
             //renomme physiquement le fichier
-            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path, $original_path] );
+            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path, $original_path, $pathq ] );
             $new_path = substr($path, 0, -$len_name) . $new_name ;
             Storage::disk('uploads') -> move($path, $new_path); 
     
@@ -319,7 +326,7 @@ class GedController extends Controller{
             $original_path = substr($folder_path,0, -$len_name);
             $new_path = substr($folder_path, 0, -$len_folder_root); // $folder_path - $fold
             //renomme physiquement le fichier
-            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path ] );
+            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path, $original_path, $pathq ] );
             Storage::disk('uploads') -> move($path, '\\'.$new_name); 
     
             //renomme le fichier en base 
