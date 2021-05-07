@@ -178,19 +178,45 @@ class GedController extends Controller{
 
     public function copyFile() {
         $file_id = request('file_id');
-        $folder_id = request('folder_id');
-        $copyFile = File::where('id', $file_id) -> get();
+        $folder_id = request('parent_folder');
+        $copyFile = File::where('id', $file_id) -> first();
+        $copyFolder = Folder::where('id', $folder_id) -> first();
+        $path = public_path('uploads');
+
+
         $file = new File();
-        if($folder_id == null){
-            $file->owner_id = $copyFile -> owner_id;
+        $file->owner_id = $copyFile->owner_id;
+        
+        $file->type =  $copyFile->type;
+        $file->filename =  $copyFile->filename;
+        if($copyFolder !== null){
+            $file->filepath = $copyFolder->folderpath;
+            $file->folder_id = $copyFolder->id;
         }
-        $file->type =  $copyFile -> type;
-        $file->filename =  $copyFile -> fileName;
+        else{
+            $file->filepath = $path;
+        }
         // $file->filepath =  $copyFile -> "";
         $file->save();
 
+        $fileToCopyEndPath = str_replace($path, '', $copyFile->filepath).'\\'.$copyFile->filename;
+        $fileCopiedEndPath = str_replace($path, '', $file->filepath).'\\'.$copyFile->filename;
 
-        Storage::move('hodor/file1.jpg', 'hodor/file2.jpg');
+        // Storage::disk('uploads')->put('pathsss.txt', $fileToCopyEndPath.'->>>'.$copyFile->filepath.'-----------'.$fileCopiedEndPath.'-->>>>'.$file->filepath);
+
+
+
+
+        Storage::disk('uploads')->copy($fileToCopyEndPath, $fileCopiedEndPath);
+
+        for($i = 1 ; $i <= 6 ; $i++) //assignation de tous les droits sur le fichier à l'utilisateur
+        {
+            $newRight = new Right();
+            $newRight -> user_id = $copyFile->owner_id;
+            $newRight ->file_id = $file->id;
+            $newRight -> type = $i;
+            $newRight->save();
+        }
     }
 
     public function moveFile() 

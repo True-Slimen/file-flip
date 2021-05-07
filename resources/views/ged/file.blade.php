@@ -21,7 +21,6 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form>
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Dossier cible</label>
                                                                     <select name="parent_folder" id="parent_folder" class="form-control">
@@ -29,13 +28,13 @@
 
                                                                         @foreach($folderlists as $folderlist)
 
-                                                                        <option value="{{$folderlist -> id}}, {{$file -> id}}">{{ $folderlist->foldername }}</option>
+                                                                        <option value="{{$folderlist -> id}}">{{ $folderlist->foldername }}</option>
 
                                                                         @endforeach
                                                                         
                                                                     </select>
+                                                                    <input hidden type="text" class="form-control" id="file_id" value="{{$file->id}}" name="file_id">
                                                                 </div>
-                                                                </form>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
