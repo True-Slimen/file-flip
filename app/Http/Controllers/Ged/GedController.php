@@ -203,12 +203,10 @@ class GedController extends Controller{
         $fileCopiedEndPath = str_replace($path, '', $file->filepath).'\\'.$copyFile->filename;
 
             
-        return back()
-        ->with('success','Fichier déplacé avec succès !');
-
-
+        
+        
         Storage::disk('uploads')->copy($fileToCopyEndPath, $fileCopiedEndPath);
-
+        
         for($i = 1 ; $i <= 6 ; $i++) //assignation de tous les droits sur le fichier à l'utilisateur
         {
             $newRight = new Right();
@@ -217,6 +215,8 @@ class GedController extends Controller{
             $newRight -> type = $i;
             $newRight->save();
         }
+        return back()
+        ->with('success','Fichier déplacé avec succès !');
     }
 
     public function moveFile(Request $request) 
