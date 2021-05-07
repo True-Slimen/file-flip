@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
                     'lastname' => 'admin',
                     
                 
-                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                    'password' => '$2y$10$dBOJbM3571pxPrPYDuteDOpw0Ux7w0ideLaD/OwoU/AvWJjPSTcHi'
                 ],
                 [
                     'email' => 'pineau@mail.com',
@@ -47,7 +47,7 @@ class CreateUsersTable extends Migration
                     'lastname' => 'Pineau',
                     
                 
-                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                    'password' => '$2y$10$dBOJbM3571pxPrPYDuteDOpw0Ux7w0ideLaD/OwoU/AvWJjPSTcHi'
                 ],
                 [
                     'email' => 'patral@mail.com',
@@ -59,7 +59,7 @@ class CreateUsersTable extends Migration
                     'lastname' => 'Patral',
                     
                 
-                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                    'password' => '$2y$10$dBOJbM3571pxPrPYDuteDOpw0Ux7w0ideLaD/OwoU/AvWJjPSTcHi'
                 ],
                 [
                     'email' => 'mishkanov@mail.com',
@@ -71,7 +71,7 @@ class CreateUsersTable extends Migration
                     'lastname' => 'Mishkanov',
                     
                 
-                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                    'password' => '$2y$10$dBOJbM3571pxPrPYDuteDOpw0Ux7w0ideLaD/OwoU/AvWJjPSTcHi'
                 ],
                 [
                     'email' => 'adelaïde@mail.com',
@@ -83,7 +83,7 @@ class CreateUsersTable extends Migration
                     'lastname' => 'Menya',
                     
                 
-                    'password' => '$10$D2MpzPMHuVJzUQD0TBNU4.iapQgYwHWPvWOqGI..brafFOtO1iQ7a'
+                    'password' => '$2y$10$dBOJbM3571pxPrPYDuteDOpw0Ux7w0ideLaD/OwoU/AvWJjPSTcHi'
                 ]
             ]
         );

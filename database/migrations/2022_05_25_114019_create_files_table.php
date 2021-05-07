@@ -31,6 +31,7 @@ class CreateFilesTable extends Migration
             $table->string('filename');
             $table->string('filepath');
             $table->timestamps();
+            $table->timestamp('finished_at')->nullable();
         });
     }
 

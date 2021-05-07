@@ -22,10 +22,11 @@ class CreateFoldersTable extends Migration
             ->onDelete('restrict')
             ->onUpdate('restrict');
             $table->string('foldername');
-            $table->string('folderpath')->nullable();;
-            $table->integer('parent_folder')->nullable();;
-            $table->integer('position_folder')->nullable();;
+            $table->string('folderpath')->nullable();
+            $table->integer('parent_folder')->nullable();
+            $table->integer('position_folder')->nullable();
             $table->timestamps();
+            $table->timestamp('finished_at')->nullable();
         });
     }
 
