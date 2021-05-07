@@ -6207,6 +6207,7 @@ a.close.disabled {
 
 .modal-dialog {
   position: relative;
+  top: 5rem!important;
   width: auto;
   margin: 0.5rem;
   pointer-events: none;
@@ -6281,6 +6282,7 @@ a.close.disabled {
 
 .modal-content {
   position: relative;
+  top:5rem!important;
   display: flex;
   flex-direction: column;
   width: 100%;

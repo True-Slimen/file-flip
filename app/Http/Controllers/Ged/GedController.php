@@ -202,9 +202,9 @@ class GedController extends Controller{
         $fileToCopyEndPath = str_replace($path, '', $copyFile->filepath).'\\'.$copyFile->filename;
         $fileCopiedEndPath = str_replace($path, '', $file->filepath).'\\'.$copyFile->filename;
 
-        // Storage::disk('uploads')->put('pathsss.txt', $fileToCopyEndPath.'->>>'.$copyFile->filepath.'-----------'.$fileCopiedEndPath.'-->>>>'.$file->filepath);
-
-
+            
+        return back()
+        ->with('success','Fichier déplacé avec succès !');
 
 
         Storage::disk('uploads')->copy($fileToCopyEndPath, $fileCopiedEndPath);
@@ -219,22 +219,41 @@ class GedController extends Controller{
         }
     }
 
-    public function moveFile() 
+    public function moveFile(Request $request) 
     {
-        $file_id = request('file_id');
+        $file_id = $request->input('file_id');
         $moving_file = File::where('id', $file_id) -> first();
-        $file_name = $moving_file -> filename;
+        //$moving_folder = Folder::where('id', $folder_id) -> first();
+        $file_name = $moving_file -> filename ;
         $folder_id = $moving_file -> folder_id;
+        $folder_to_move_id = request('parent_folder'); //id du dossier où l'on souhaite déplacer le fichier
+        $folder_initial = Folder::where('id', $folder_id) -> first();
+        if($folder_initial != null) {
 
-        $folder_to_move_id = request('folder_id'); //id du dossier où l'on souhaite déplacer le fichier
+            $moving_file -> filepath = public_path('uploads') ; //update path file
+            $moving_file -> folder_id = null ; //update parent folder
+            $moving_file->save();
+            Storage::disk('uploads') -> move( '\\'. $folder_initial->foldername . '\\'.$file_name, $file_name);
+
+            return back()
+            ->with('success','Fichier ' . $file_name . ' déplacé avec succès !')
+            ->with('file',$file_name);
+        }
         $folder_to_move = Folder::where('id', $folder_to_move_id) -> first();
+        $folder_name = $folder_to_move -> foldername; //path du dossier où l'on souhaite déplacer le fichier
         $folder_path = $folder_to_move -> folderpath; //path du dossier où l'on souhaite déplacer le fichier
+        
+        $name = "/" . $file_name;
+        $names = "/" . $folder_name;
+        $file_path = $moving_file -> filepath . '\\'. $file_name; //path initial du fichier à déplacer
 
-        $file_path = $moving_file -> filepath; //path initial du fichier à déplacer
-
-        Storage::disk('uploads') -> move($file_path, $folder_path);
-        $moving_file -> filepath = $folder_path .'\\'. $file_name; //update path file
+        Storage::disk('uploads') -> move( $file_name, $folder_name . '\\'.$file_name);
+        $moving_file -> filepath = $folder_path ; //update path file
+        $moving_file -> folder_id = $folder_to_move_id ; //update parent folder
         $moving_file->save();
+        return back()
+        ->with('success','Fichier ' . $file_name . ' déplacé avec succès !')
+        ->with('file',$file_name);
     }
 
     public function moveFolder() 
@@ -270,21 +289,53 @@ class GedController extends Controller{
         $folder_id = request('folder_id');
         $new_name = request('folder_name'); //nouveau nom du fichier 
         $folder = Folder::find($folder_id);
-        $folder_path = $folder -> fodlerpath;
-        $folder_name = $folder -> fodlername;
+        $folder_path = $folder -> folderpath;
+        $folders_path = "C:\laragon\www\\file-flip\public\uploads\\toto\\ze\\sd\\po";
+        
+        $folder_name = $folder -> foldername;
+        $folder_parent_id = $folder -> parent_folder;
+        $len_folder_root= strlen(public_path('uploads'));
+        $len_folder_name= strlen($folder_name);
+        $pathq = substr($folders_path, $len_folder_root);
+        $path = substr($folder_path, $len_folder_root);
+        if($folder_parent_id != 0){
+            $len_name =  strlen($folder_name);
+            $original_path = substr($folder_path,0, -$len_name);
+            //$new_path = substr($folder_path, 0, -$len_folder_root); // $folder_path - $fold
+            //renomme physiquement le fichier
+            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path, $original_path, $pathq ] );
+            $new_path = substr($path, 0, -$len_name) . $new_name ;
+            Storage::disk('uploads') -> move($path, $new_path); 
+    
+            //renomme le fichier en base 
+            $folder -> folderpath = $original_path . $new_path;
+            $folder -> foldername = $new_name;
+            $folder->save();
+    
+            return back()
+            ->with('success','Dossier renommé avec succès !');
+
+        }
+        else 
+        {
+            $len_name =  strlen($folder_name);
+            $original_path = substr($folder_path,0, -$len_name);
+            $new_path = substr($folder_path, 0, -$len_folder_root); // $folder_path - $fold
+            //renomme physiquement le fichier
+            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path, $original_path, $pathq ] );
+            Storage::disk('uploads') -> move($path, '\\'.$new_name); 
+    
+            //renomme le fichier en base 
+            $folder -> folderpath = $original_path . $new_name;
+            $folder -> foldername = $new_name;
+            $folder->save();
+    
+            return back()
+            ->with('success','Dossier renommé avec succès !');
+        }
         // $str = substr($str, 0, strpos($str, '-'));
-        $new_path = substr($folder_path, 0); // $folder_path - $folder_name
-
-        //renomme physiquement le fichier
-        Storage::move($folder_path, $new_path); 
-
-        //renomme le fichier en base 
-        $folder -> folderpath = $new_path;
-        $folder -> foldername = $folder_name;
-        $folder->save();
-
-        return back()
-        ->with('success','Dossier renommé avec succès !');
+ // $folder_path - $folder_name
+  
     }
 
     public function getFileContent()
