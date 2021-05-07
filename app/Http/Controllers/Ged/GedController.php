@@ -179,7 +179,7 @@ class GedController extends Controller{
     public function copyFile() {
         $file_id = request('file_id');
         $folder_id = request('folder_id');
-        $copyFile = File::where('file_id', $file_id) -> get();
+        $copyFile = File::where('id', $file_id) -> get();
         $file = new File();
         if($folder_id == null){
             $file->owner_id = $copyFile -> owner_id;
@@ -216,17 +216,19 @@ class GedController extends Controller{
 
     }
 
-    public function renameFile()
+    public function renameFile(Request $request)
     {
-        $file_id = request('file_id');
-        $new_name = request('file_name'); //nouveau nom du fichier 
-        $file = File::find($file_id);
+        $file_id = $request->input('file_id'); //nouveau nom du fichier 
+        $file = File::where('id', $file_id) -> first();
+        $file_name = $file -> filename;
+        //$file = File::find($file_id);
         $type = $file -> type;
-        $file_path = $file -> filepath . '\\' . $file -> filename;
+        $new_name = $request->input('new_name') . "." . $type;
+        $file_path = $file -> filepath . '\\' . $file_name;
         $new_path =  $file -> filepath . '\\' . $new_name . '.' . $type;
 
         //renomme physiquement le fichier
-        Storage::move($file_path, $new_path); 
+        Storage::disk('uploads') -> move($file_name, $new_name . "." . $type); 
 
         //renomme le fichier en base 
         $file -> filepath = $new_path;
@@ -257,5 +259,22 @@ class GedController extends Controller{
 
         return back()
         ->with('success','Dossier renommé avec succès !');
+    }
+
+    public function getFileContent()
+    {   
+        $file_id = request('file_id');
+        $file = File::where('id', $file_id);
+        $file_name = $file -> filename;
+        $file_path = $file -> filepath;
+        $content = file_get_contents($file_path);
+
+        return view('/ged/editFile',['content'=> $content]);
+    }
+
+    public function edit() 
+    {
+            
+            //file_put_contents();
     }
 }
