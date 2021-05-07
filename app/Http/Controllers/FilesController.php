@@ -58,7 +58,7 @@ class FilesController extends Controller
         }
         $file->type =  $type;
         $file->filename =  $fileName;
-        $file->filepath = dirname(__DIR__, 3) . $path;
+        $file->filepath = $path ;
         $file->save();
 
         $file_id = $file -> id;
