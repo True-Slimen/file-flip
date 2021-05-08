@@ -48,10 +48,10 @@
         @elseif($right->folder_id == $folderlist->id && $right->type == 3 )
         <form class="col-4 p-0" method="POST" action="/move-folder">
             @csrf
-            <button type="button" class="btn btn-outline-secondary btn-sm col-12" data-toggle="modal" data-target="#modalMove">
+            <button type="button" class="btn btn-outline-secondary btn-sm col-12" data-toggle="modal" data-target="#modalMove_{{$folderlist->id}}">
                 Déplacer
             </button>
-            <div class="modal fade" id="modalMove" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="modalMove_{{$folderlist->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -87,11 +87,12 @@
         </form>
         @elseif($right->folder_id == $folderlist->id && $right->type == 5 )
         <div class="col-4 p-0">
+            <form class="col-4 p-0" method="POST" action="/rename-folder">
             @csrf
-            <button type="button" class="btn btn-outline-secondary btn-sm col-12" data-toggle="modal" data-target="#modalRename">
+            <button type="button" class="btn btn-outline-secondary btn-sm col-12" data-toggle="modal" data-target="#modalRename_{{$folderlist->id}}">
                 Renommer
             </button>
-            <div class="modal fade" id="modalRename" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="modalRename_{{$folderlist->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -101,20 +102,20 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label">Nouveau nom</label>
-                                    <input type="text" class="form-control" id="recipient-name">
+                                    <input name='new_name' type="text" class="form-control" id="recipient-name">
+                                    <input hidden name='folder_id' type="text" class="form-control" id="recipient-name" value="{{$folderlist->id}}">
                                 </div>
-                            </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary " type="submit">Renommer</button>
+                            <button class="btn btn-primary " type="submit">Renommer</button>
                         </div>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
         @endif
         @endforeach
