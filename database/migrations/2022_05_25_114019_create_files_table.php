@@ -30,6 +30,7 @@ class CreateFilesTable extends Migration
             $table->string('type');
             $table->string('filename');
             $table->string('filepath');
+            $table->string('shortpath');
             $table->timestamps();
             $table->timestamp('finished_at')->nullable();
         });

@@ -18,10 +18,10 @@ class GedController extends Controller{
 
         //'Voir', 'Lire', 'Ecrire', 'Supprimer', 'Déplacer', 'Copier'
 
-        $userData = Auth::user();
+        $user = Auth::user();
         $rights = Right::all();
 
-        $isAdmin = Right::where('user_id', $userData->id)
+        $isAdmin = Right::where('user_id', $user->id)
             ->where('type', 10)
             ->get();
         
@@ -30,9 +30,23 @@ class GedController extends Controller{
         Storage::disk('uploads')->put('example.txt', 'Contents');
         $folder = Folder::all();
         $file = File::all();
+        $see_rights = Right::where('user_id', $user->id)->where('type', 1)->get();
 
-        //$content = Storage::disk('uploads')->get('example.txt');
+        $file_ids = [];
+        foreach($see_rights as $see) 
+        {
+            $file_id = $see->file_id;
+            array_push($file_ids, $file_id);
+        }
 
+        $files = [];
+        foreach($file_ids as $id)
+        {
+            $filess = File::find($id);
+            array_push($files, $filess);
+
+        }
+        Storage::disk('uploads')->put('example.txt', $files);
         return view('/ged/root',['folderlists'=> $folder, 'filelist'=> $file, 'isAdmins'=> $isAdmin, 'rights' => $rights]);
     }
 
@@ -64,7 +78,17 @@ class GedController extends Controller{
         {
             $path = public_path('uploads').'\\' . $foldername ;
             $folder->folderpath = $path ;
-            $newDirectory = FacadesFile::makeDirectory($path);
+            if( is_dir($path))
+            {
+                return back ()
+                ->with('error','Le dossier existe déjà. Veuillez le renommer s\'il vous plait.')
+                ->with('folder',$foldername);
+            }
+            else
+            {
+                $newDirectory = FacadesFile::makeDirectory($path);
+            }
+            
         }
         else 
         {
@@ -201,12 +225,7 @@ class GedController extends Controller{
 
         $fileToCopyEndPath = str_replace($path, '', $copyFile->filepath).'\\'.$copyFile->filename;
         $fileCopiedEndPath = str_replace($path, '', $file->filepath).'\\'.$copyFile->filename;
-
             
-        return back()
-        ->with('success','Fichier déplacé avec succès !');
-
-
         Storage::disk('uploads')->copy($fileToCopyEndPath, $fileCopiedEndPath);
 
         for($i = 1 ; $i <= 6 ; $i++) //assignation de tous les droits sur le fichier à l'utilisateur
@@ -217,6 +236,9 @@ class GedController extends Controller{
             $newRight -> type = $i;
             $newRight->save();
         }
+
+        return back()
+        ->with('success','Fichier déplacé avec succès !');
     }
 
     public function moveFile(Request $request) 
@@ -270,7 +292,7 @@ class GedController extends Controller{
         $type = $file -> type;
         $new_name = $request->input('new_name') . "." . $type;
         $file_path = $file -> filepath . '\\' . $file_name;
-        $new_path =  $file -> filepath . '\\' . $new_name . '.' . $type;
+        $new_path =  $file -> filepath . '\\' . $new_name;
 
         //renomme physiquement le fichier
         Storage::disk('uploads') -> move($file_name, $new_name . "." . $type); 
@@ -301,7 +323,6 @@ class GedController extends Controller{
         if($folder_parent_id != 0){
             $len_name =  strlen($folder_name);
             $original_path = substr($folder_path,0, -$len_name);
-            //$new_path = substr($folder_path, 0, -$len_folder_root); // $folder_path - $fold
             //renomme physiquement le fichier
             Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path, $original_path, $pathq ] );
             $new_path = substr($path, 0, -$len_name) . $new_name ;
@@ -338,20 +359,26 @@ class GedController extends Controller{
   
     }
 
-    public function getFileContent()
+    public function getFileContent($file_id)    //permet d'afficher le contenu d'un fichier
     {   
-        $file_id = request('file_id');
-        $file = File::where('id', $file_id);
+        Storage::disk('uploads')->put('examplqse.txt',$file_id );
+        $file = File::find($file_id);
         $file_name = $file -> filename;
         $file_path = $file -> filepath;
-        $content = file_get_contents($file_path);
+        $content = file_get_contents($file_path . '\\'. $file_name);
 
-        return view('/ged/editFile',['content'=> $content]);
+        return view('/ged/editFile',['content'=> $content, 'file_id' =>$file_id]);
     }
 
-    public function edit() 
+    public function edit($file_id) //permet d'éditer le contenu d'un fichier txt
     {
-            
-            //file_put_contents();
+            $file = File::where("id", $file_id) -> first();
+            $file_name = $file->filename;
+            $file_path = $file -> filepath;
+            $content =request('content');
+            $new_file =  file_put_contents($file_path . '\\'. $file_name, $content);
+
+            return redirect('/ged/root')
+            ->with('success','Fichier '.$file_name.' sauvegardé avec succès !');
     }
 }

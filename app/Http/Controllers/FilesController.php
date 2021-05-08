@@ -28,17 +28,28 @@ class FilesController extends Controller
         ]);
         
         $folder_id = request('parent_folder');
-        $folder = Folder::where('id', $folder_id) -> get(); 
+        $folder = Folder::where('id', $folder_id) -> first(); 
         $path = public_path('uploads');
+        $len_folder_root= strlen(public_path('uploads'));
+
+        $file = new File();
+
         if($folder_id != 0)
-        {
-            $folder_name = $folder[0] -> foldername;
-            $path = public_path('uploads') .'\\'. $folder_name ;
+        {   
+            $folder_path = $folder -> folderpath;
+            $folder_name = $folder -> foldername;
+            $shortpath = '\\uploads' . substr($folder_path, $len_folder_root);
+            $file->shortpath = $shortpath;
+            $file->filepath = $folder_path ;
+        }
+        else
+        {   
+            $file->shortpath = "\uploads" ;
+            $file->filepath = $path ;
         }
         $user = Auth::user();
         $owner_id = $user->id;
         $fileName = $request->file->getClientOriginalName();
-        Storage::disk('uploads')->put('example.txt', getcwd());
         $exist = File::where('filename', $fileName)->exists();
         if( $exist == true) 
             return back()
@@ -50,7 +61,7 @@ class FilesController extends Controller
 
 
 
-        $file = new File();
+
         $file->owner_id = $owner_id;
         if($folder_id != 0){
 
@@ -58,9 +69,7 @@ class FilesController extends Controller
         }
         $file->type =  $type;
         $file->filename =  $fileName;
-        $file->filepath = $path ;
         $file->save();
-
         $file_id = $file -> id;
 
         for($i = 1 ; $i <= 6 ; $i++) //assignation de tous les droits sur le fichier à l'utilisateur
@@ -75,7 +84,7 @@ class FilesController extends Controller
         
         
         return back()
-            ->with('success','Fichier' . $file_id . 'mis en ligne avec succès')
+            ->with('success','Fichier mis en ligne avec succès !')
             ->with('file',$fileName);
     }
 } 
