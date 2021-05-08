@@ -29,6 +29,7 @@
                 <div class="col-5 mr-auto">
                     <h4>Créer un dossier</h4>
                     <form class="row" method="POST" action="/create-folder">
+                    @csrf
                         <input type='text' id='foldername' class="col-12" name='foldername' required maxlength='20' placeholder="Nom du nouveau dossier">
                         <select name="parent_folder" id="parent_folder" class="form-control my-3">
                             <option value="null">Racine</option>
@@ -91,7 +92,7 @@
             <div class="card-header p-0" id="headingOne">
                 <div class="card-header p-0" id="headingOne">
                     <div class="row">
-                        <button class="btn col-6" data-toggle="collapse" data-target="#collapse{{ $folderlist->id }}" aria-expanded="true" aria-controls="collapseOne">
+                    <a class="button btn col-6" aria-controls="collapseOne" href='/ged/folder/{{$folderlist->id}}'>
                             <h4>{{ $folderlist->foldername }}</h4>
                         </button>
                         @include('ged/folder-right')
