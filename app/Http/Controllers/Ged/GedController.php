@@ -280,7 +280,7 @@ class GedController extends Controller{
         ->with('file',$file_name);
     }
 
-    public function moveFolder() 
+    public function moveFolder() //Feature à venir
     {
 
     }
@@ -295,7 +295,8 @@ class GedController extends Controller{
         $new_name = $request->input('new_name') . "." . $type;
         $file_path = $file -> filepath . '\\' . $file_name;
         $new_path =  $file -> filepath . '\\' . $new_name;
-
+        $files = Storage::disk('uploads') -> allFiles('/');
+        Storage::disk('uploads')->put('ff.txt', $files);
         //renomme physiquement le fichier
         Storage::disk('uploads') -> move($file_name, $new_name); 
 
@@ -373,10 +374,12 @@ class GedController extends Controller{
     {
             $file = File::where("id", $file_id) -> first();
             $file_name = $file->filename;
+            $name = substr($file_name, 0, -4);
+            $today = date("d.m.y"); 
             $file_path = $file -> filepath;
             $content =request('content');
-            $new_file =  file_put_contents($file_path . '\\'. $file_name, $content);
-
+            Storage::disk('uploads') -> move($file_name, '\\versionning\\'.$name. '_'.$today.'.txt'); 
+            file_put_contents($file_path . '\\'. $file_name, $content);
             return redirect('/ged/root')
             ->with('success','Fichier '.$file_name.' sauvegardé avec succès !');
     }

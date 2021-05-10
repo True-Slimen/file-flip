@@ -15,14 +15,15 @@
                                             <button type="button" class="btn btn-outline-secondary btn-sm col-12" data-toggle="modal" data-target="#modalMoveFile_{{$file->id}}">
                                                 Déplacer
                                             </button>
+                                            <a class="btn btn-outline-secondary btn-sm col-12" onclick="window.open('/ged/edit-file/{{$file->id}}')" data-toggle="modal" href="/ged/edit-file/{{$file->id}}"> 
+                                            Edit 
+                                            </a>
                                         @elseif($right->file_id == $file->id && $right->type == 5 )
                                             <button type="button" class="btn btn-outline-secondary btn-sm col-12" data-toggle="modal" data-target="#modalRenameFile_{{$file->id}}">
                                                 Renommer
                                             </button>
                                         @elseif($right->file_id == $file->id && $right->type == 3 )
-                                            <a class="btn btn-outline-secondary btn-sm col-12" onclick="window.open('/ged/edit-file/{{$file->id}}')" data-toggle="modal" href="/ged/edit-file/{{$file->id}}"> 
-                                            Edit 
-                                            </a>
+
                                         @endif
                                     @endforeach
                                    
