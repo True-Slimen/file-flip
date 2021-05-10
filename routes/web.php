@@ -72,6 +72,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/rename-folder','Ged\GedController@renameFolder');
 
 
+    Route::post('/send-new-user','Admin\UsersController@createUserByAdmin');
+
+    Route::view('/create-user','/dashboard/user/user');
+
+
     Route::post('/edit-group','GroupsController@createGroup');
 
     Route::post('/assign-membre','GroupsController@assignMembre');

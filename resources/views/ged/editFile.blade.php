@@ -1,12 +1,18 @@
 @extends('layouts/app')
 
 @section('content')
+<style>
+    footer{bottom: 0;}
+</style>
 
-<form class="col-4 p-0" method="POST" action="/ged/edit/{{$file_id}}">
-@csrf
-    <textarea name="content" style='position: relative; margin-left: 6rem; height: 37rem; width: 73rem; top: 4rem;'>
-        <?php echo $content ?>
-    </textarea>
-    <button style="position: relative; bottom: 33rem; height: 2rem; width: 5rem; left: 0.5rem;" type="submit" class="btn btn-outline-secondary btn-sm col-12" data-toggle="modal">Saugegarder</button>  
-</form>
+<section class="container section-top">
+    <h4><strong>Contenu du fichier</strong></h4>
+    <form class="col-12 p-0" method="POST" action="/ged/edit/{{$file_id}}">
+    @csrf
+        <textarea class="col-12 rounded" rows="10" name="content" >
+            {{ $content }}
+        </textarea>
+        <button type="submit" class="custom-btn-secondary mt-3" data-toggle="modal">Sauvegarder</button>  
+    </form>
+</section>
 @endsection

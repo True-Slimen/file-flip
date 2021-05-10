@@ -30,6 +30,6 @@
 
     </div>
 </section>
-<a href="#" style="position: relative;left: 95rem;"><i class="bi bi-arrow-bar-up" style="font-size: 2rem;" ></i></a>
+<!-- <a href="#" style="position: relative;left: 95rem;"><i class="bi bi-arrow-bar-up" style="font-size: 2rem;" ></i></a> -->
 @endsection
 

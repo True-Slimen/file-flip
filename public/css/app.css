@@ -5532,7 +5532,6 @@ a.badge-dark.focus {
 
 .alert {
   position: relative;
-  bottom: 33rem;
   padding: 0.75rem 1.25rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
@@ -6208,7 +6207,6 @@ a.close.disabled {
 
 .modal-dialog {
   position: relative;
-  top: 5rem!important;
   width: auto;
   margin: 0.5rem;
   pointer-events: none;
@@ -6283,7 +6281,6 @@ a.close.disabled {
 
 .modal-content {
   position: relative;
-  top:5rem!important;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -11034,6 +11031,14 @@ h6 {
   height: 100% !important;
   width: 1px !important;
   border-left: 1px solid #d2d2d2;
+}
+
+.modal {
+  margin-top: 200px;
+}
+
+.btn-delete {
+  height: 100%;
 }
 
 label {
