@@ -40,6 +40,15 @@ class GedController extends Controller{
             }
         }
 
+        $filesWithRights = [];
+        foreach($isAdmin as $right){
+            foreach($file as $file2){
+                if($right->user_id==$file2->owner_id){
+                    array_push($filesWithRights, $file2);
+                }
+            }
+        }
+
         $file_ids = [];
         foreach($see_rights as $see) 
         {
@@ -55,7 +64,7 @@ class GedController extends Controller{
 
         }
         Storage::disk('uploads')->put('example.txt', $files);
-        return view('/ged/root',['folderlists'=> $foldersWithRights, 'filelist'=> $file, 'isAdmins'=> $isAdmin, 'rights' => $rights]);
+        return view('/ged/root',['folderlists'=> $foldersWithRights, 'filelist'=> $filesWithRights, 'isAdmins'=> $isAdmin, 'rights' => $rights]);
     }
 
     public function createFolder()
