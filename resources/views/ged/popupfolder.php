@@ -1,7 +1,7 @@
 
 <!--- Popup pour les folders --->
 <form class="col-4 p-0" method="POST" action="/move-folder">
-@csrf
+    <!-- @csrf -->
     <div class="modal fade" id="modalMove" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -38,7 +38,7 @@
 </form>
 
 <form class="col-4 p-0" method="POST" action="/rename-folder">
-@csrf
+    <!-- @csrf -->
     <div class="modal fade" id="modalRename" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

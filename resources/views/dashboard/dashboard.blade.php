@@ -5,7 +5,6 @@
 <section class="container section-top mb-5">
     <h1>Bienvenue sur le Dashboard</h1>
     <p>Explorez vos fichiers, ajoutez-en à votre espaces, creez et gérer vos groupes. Manager les droits relatifs à vos fichiers afin d'avoir un contrôle total sur leur visibilité.</p>
-    <a href="/dashboard/createfixtures" class="btn btn-success">Créer des utilisateurs</a>
 </section>
 <section class="custom-card container regular-section">
     <div class="row">
@@ -14,37 +13,28 @@
         </div>
         <div class="col-6 mt-4 mb-3">
             <div class="card wrapper p-3">
-                <h4>Groupe</h4>
-                @isset($members)
-                Vous appartenez aux groupes :
+                <h4><strong>Groupe</strong></h4>
+                @isset($ownGroups)
+                @if(count($ownGroups) > 0)
+                <p>Vous appartenez aux groupes :</p>
+                @else
+                <p>Vous n'appartenez à aucun groupe</p>
+                @endif
                 <ul>
-                    @foreach($members as $member)
-                    <li>{{ $member->group->name }}</li>
+                    @foreach($ownGroups as $ownGroup)
+                    <li>{{ $ownGroup->group->name }}</li>
                     @endforeach
                 </ul>
                 @endisset
+                <hr>
                 <div class="row justify-content-around">
                     <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-group">Editer les groupes</a>
                 </div>
             </div>
-        </div>
-        <div class="col-6 mt-4 mb-3">
-            <div class="card p-3 wrapper">
-                <h4>Fichiers enregistrés</h4>
-                Vous avez enregistré ces fichiers:
-                @foreach($files as $file)
-                <ul>
-                    <li><a>{{ $file -> filename }} </a></li>
-                </ul>
-                @endforeach
-                <a href="/upload-file">Enregistrer un fichier</a>
-            </div>
-        </div>
-        <div class="col-6 mt-2 mb-3">
-            <div class="card wrapper p-3">
-                <h4>Rôles</h4>
+            <div class="card wrapper mt-3 p-3">
+                <h4><strong>Rôles</strong></h4>
                 @isset($roles)
-                Vous possédez les rôles :
+                Vous possédez le rôle :
                 <ul>
                     @foreach($roles as $role)
                     @if($role->type == 10)
@@ -55,6 +45,7 @@
                     @endforeach
                 </ul>
                 @endisset
+                <hr>
                 <div class="row justify-content-around">
                     @foreach($isadmin as $right)
                     @if($right->type==10)
@@ -63,10 +54,43 @@
                     @endforeach
                 </div>
             </div>
+            <div class="card wrapper mt-3 p-3">
+                <h4><strong>Créer un utilisateur</strong></h4>
+                @isset($members)
+                    <p class="mt-2">Liste des utilisateurs :</p>
+                    @foreach($members as $member)
+                    <ul>
+                        <li>{{ $member->firstname }} - <i>{{ $member->email }}</i></li>
+                    </ul>
+                    @endforeach
+                    <hr>
+                @endisset
+                <div class="row justify-content-around">
+                    @foreach($isadmin as $right)
+                    @if($right->type==10)
+                    <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/create-user">Créer</a>
+                    @endif
+                    @endforeach
+                </div>
+            </div>
         </div>
-        <div class="col-6 mt-2 mb-3">
-            <div class="card wrapper p-3">
-                <h4>Droits</h4>
+        <div class="col-6 mt-4 mb-3">
+            <div class="card p-3 wrapper">
+                <h4><strong>Fichiers enregistrés</strong></h4>
+                Vous avez enregistré ces fichiers:
+                @foreach($files as $file)
+                <ul>
+                    <li><a>{{ $file -> filename }} </a></li>
+                </ul>
+                @endforeach
+                <hr>
+                <div class="row justify-content-around">
+                    <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/upload-file">Enregistrer un fichier</a>
+                </div>
+            </div>
+            <div class="card wrapper mt-3 p-3">
+                <h4><strong>Droits</strong></h4>
+                <hr>
                 <div class="row justify-content-around">
                     @foreach($isadmin as $right)
                     @if($right->type==10)
@@ -75,6 +99,12 @@
                     @endforeach
                 </div>
             </div>
+        </div>
+        <div class="col-6 mt-2 mb-3">
+            
+        </div>
+        <div class="col-6 mt-2 mb-3">
+            
         </div>
     </div>
     <div class="text-center">

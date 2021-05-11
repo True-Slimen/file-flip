@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -82,5 +84,30 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function createUserByAdmin(){
+
+        request()->validate([
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:2', 'confirmed'],
+        ]);
+
+        $firstname = request('firstname');
+        $lastname = request('lastname');
+        $email = request('email');
+        $password = request('password');
+        $password = Hash::make($password);
+
+        $user = new User();
+        $user->firstname = $firstname;
+        $user->lastname = $lastname;
+        $user->email = $email;
+        $user->password = $password;
+        $user->save();
+
+        return redirect()->action([DashboardController::class, 'data']);
     }
 }
