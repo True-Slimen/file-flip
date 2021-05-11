@@ -12,8 +12,8 @@
         <textarea class="col-12 rounded" rows="10" name="content" >
             {{ $content }}
         </textarea>
-        <button type="submit" class="custom-btn-secondary mt-3" data-toggle="modal">Sauvegarder</button>  
+        <button type="submit" class="custom-btn-secondary mt-3" data-toggle="modal">Sauvegarder</button> 
+        <a  href="/ged/root" class="custom-btn-secondary mt-3" >Annuler</a>    
     </form>
-</section>
-    <a style="position: relative; bottom: 30rem; height: 2rem; width: 5rem; left: -4.75rem;" href="/ged/root" class="btn btn-outline-secondary btn-sm col-12" >Annuler</a>    
+</section> 
 @endsection
