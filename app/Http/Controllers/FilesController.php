@@ -41,6 +41,7 @@ class FilesController extends Controller
             $shortpath = '\\uploads' . substr($folder_path, $len_folder_root);
             $file->shortpath = $shortpath;
             $file->filepath = $folder_path ;
+            $path = $folder_path;
         }
         else
         {   
@@ -56,7 +57,7 @@ class FilesController extends Controller
             ->with('error','Ce nom de fichier existe déjà, changez le s\'il vous plait.');
 
         $type = $request->file->extension();
-
+        Storage::disk('uploads')->put('ff.txt', $path);
         $request->file->move($path, $fileName); //enregistrement du fichier
 
 

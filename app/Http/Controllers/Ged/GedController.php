@@ -372,15 +372,16 @@ class GedController extends Controller{
 
     public function edit($file_id) //permet d'éditer le contenu d'un fichier txt
     {
-            $file = File::where("id", $file_id) -> first();
-            $file_name = $file->filename;
-            $name = substr($file_name, 0, -4);
-            $today = date("d.m.y"); 
-            $file_path = $file -> filepath;
-            $content =request('content');
-            Storage::disk('uploads') -> move($file_name, '\\versionning\\'.$name. '_'.$today.'.txt'); 
-            file_put_contents($file_path . '\\'. $file_name, $content);
-            return redirect('/ged/root')
-            ->with('success','Fichier '.$file_name.' sauvegardé avec succès !');
+        $user_id = Auth::user()->id ;
+        $file = File::where("id", $file_id) -> first();
+        $file_name = $file->filename;
+        $name = substr($file_name, 0, -4);
+        $today = date("d.m.y"); 
+        $file_path = $file -> filepath;
+        $content =request('content');
+        Storage::disk('uploads') -> move($file_name, '\\versionning\\'.'\\user_'.$user_id . '\\'.$name. '_'.$today.'.txt'); //versionne le fichiers éditer
+        file_put_contents($file_path . '\\'. $file_name, $content);
+        return redirect('/ged/root')
+        ->with('success','Fichier '.$file_name.' sauvegardé avec succès !');
     }
 }
