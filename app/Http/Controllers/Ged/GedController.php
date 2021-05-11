@@ -31,6 +31,14 @@ class GedController extends Controller{
         $folder = Folder::all();
         $file = File::all();
         $see_rights = Right::where('user_id', $user->id)->where('type', 1)->get();
+        $foldersWithRights = [];
+        foreach($isAdmin as $right){
+            foreach($folder as $folder2){
+                if($right->user_id==$folder2->owner_id){
+                    array_push($foldersWithRights, $folder2);
+                }
+            }
+        }
 
         $file_ids = [];
         foreach($see_rights as $see) 
@@ -47,7 +55,7 @@ class GedController extends Controller{
 
         }
         Storage::disk('uploads')->put('example.txt', $files);
-        return view('/ged/root',['folderlists'=> $folder, 'filelist'=> $file, 'isAdmins'=> $isAdmin, 'rights' => $rights]);
+        return view('/ged/root',['folderlists'=> $foldersWithRights, 'filelist'=> $file, 'isAdmins'=> $isAdmin, 'rights' => $rights]);
     }
 
     public function createFolder()
