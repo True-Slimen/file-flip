@@ -69,7 +69,7 @@ class GedController extends Controller{
 
         }
         Storage::disk('uploads')->put('example.txt', $files);
-        return view('/ged/root',['folderlists'=> $foldersWithRights, 'filelist'=> $filesWithRights, 'isAdmins'=> $isAdmin, 'rights' => $rights]);
+        return view('/ged/root',['folderlists'=> $foldersWithRights, 'filelist'=> $file, 'isAdmins'=> $isAdmin, 'rights' => $rights]);
     }
 
     public function createFolder()
@@ -100,6 +100,7 @@ class GedController extends Controller{
         {
             $path = public_path('uploads').'\\' . $foldername ;
             $folder->folderpath = $path ;
+            $folder->shortpath = '\\'.$foldername ;
             if( is_dir($path))
             {
                 return back ()
@@ -114,6 +115,7 @@ class GedController extends Controller{
         }
         else 
         {
+
             $parent_folder = Folder::where('id', $parent_id) -> first();
             $same_name = Folder::where('parent_folder', $parent_id) -> where('foldername', $foldername) -> first();
             if($same_name != null)
@@ -122,8 +124,10 @@ class GedController extends Controller{
                 ->with('error','Le dossier existe déjà. Veuillez le renommer s\'il vous plait.')
                 ->with('folder',$foldername);
             }
+            $len_folder_root= strlen(public_path('uploads'));
             $parent_path = $parent_folder ->folderpath ;
             $folder->folderpath = $parent_path . '\\' . $foldername ;
+            $folder->shortpath = substr($parent_path, $len_folder_root) . '\\'.$foldername;
             $folder->save();
             $newDirectory = FacadesFile::makeDirectory($parent_path . '\\' . $foldername);
 
@@ -162,22 +166,49 @@ class GedController extends Controller{
         $folder_name= $deletingFolder -> foldername;
         $folder_id= $deletingFolder -> id;
         $deletingFiles = File::where('folder_id', $folder_id) -> get();
-        $deletingFolders = Folder::where('parent_folder', $folder_id);
+        $deletingFolders = Folder::where('parent_folder', $folder_id)->get();
 
         //suppresion des fichiers contenus dans le dossier
         foreach($deletingFiles as $deletingFile)
-        {   $file_name = $deletingFile -> filename; 
+        {   //$file_name = $deletingFile -> filename; 
             Right::where('file_id', $deletingFile->id)->delete();
             File::where('id', $deletingFile->id)->delete();
             //Storage::disk('uploads')->delete($folder_name . '\\' . $file_name);
         }
 
+        //supression des dossiers contenus dans le dossier
         foreach($deletingFolders as $deletingFolder)
         {
-            Right::where('folder_id', $deletingFolders->id)->delete();
-            Folder::where('parent_folder', $deletingFolders -> id)->delete();
+            Right::where('folder_id', $deletingFolder->id)->delete();   //delete les droits du folder
+            Folder::where('id', $deletingFolder -> id)->delete(); //delete le folder
+            $folders = Folder::where('parent_folder', $deletingFolder -> id)->get(); //delete des folders qui sont des ces folders 
+            foreach($folders as $folder)
+            {
+                Right::where('folder_id', $folder->id)->delete();   //delete les droits du folder
+            }
+            Folder::where('parent_folder', $deletingFolder -> id)->delete(); //delete des folders qui sont des ces folders 
         }
 
+        $folders = Folder::where('id' ,'!=', null)->get();
+        $folderss = Folder::where('id' ,'!=', 0)->get();
+        Storage::disk('uploads')->put('exampssle.txt', $folders);
+        foreach($folders as $folder)
+        {
+            $parent_folder_id = $folder->parent_folder;
+            $parent_folder = Folder::where('id', $parent_folder_id);
+            if($parent_folder == null)
+            {
+                Right::where('folder_id', $folder->id)->delete();   //delete les droits du folder
+                Folder::where('id', $folder->id)->delete();
+                $folders = Folder::where('parent_folder', $folder->id)->get(); //delete des folders qui sont des ces folders 
+                foreach($folders as $folder)
+                {
+                    Right::where('folder_id', $folder->id)->delete();   //delete les droits du folder
+                }
+                Folder::where('parent_folder', $folder -> id)->delete(); //delete des folders qui sont des ces folders 
+            }
+            
+        }
         //suppression physique du dossier et de son contenu
         Storage::disk('uploads')->deleteDirectory($folder_name);
 
@@ -222,13 +253,14 @@ class GedController extends Controller{
         ->with('file',$file_name);
     }
 
-    public function copyFile() {
+    public function copyFile() 
+    {
         $file_id = request('file_id');
         $folder_id = request('parent_folder');
-        $copyFile = File::where('id', $file_id) -> first();
-        $copyFolder = Folder::where('id', $folder_id) -> first();
+        $copyFile = File::where('id', $file_id) -> first(); //fichier à copier
+        $copyFolder = Folder::where('id', $folder_id) -> first(); //dossier où l'on souhaite copier le fichier
         $path = public_path('uploads');
-
+        $len_folder_root= strlen($path);
 
         $file = new File();
         $file->owner_id = $copyFile->owner_id;
@@ -237,6 +269,7 @@ class GedController extends Controller{
         $file->filename =  $copyFile->filename;
         if($copyFolder !== null){
             $file->filepath = $copyFolder->folderpath;
+            $file->shortpath = $copyFolder->shortpath . '\\'.$copyFile->filename;
             $file->folder_id = $copyFolder->id;
         }
         else{
@@ -269,37 +302,67 @@ class GedController extends Controller{
     {
         $file_id = $request->input('file_id');
         $moving_file = File::where('id', $file_id) -> first();
-        //$moving_folder = Folder::where('id', $folder_id) -> first();
         $file_name = $moving_file -> filename ;
         $folder_id = $moving_file -> folder_id;
+        $file_path = $moving_file -> shortpath;
         $folder_to_move_id = request('parent_folder'); //id du dossier où l'on souhaite déplacer le fichier
+        $folder_to_move = Folder::where('id', $folder_to_move_id) -> first();
         $folder_initial = Folder::where('id', $folder_id) -> first();
-        if($folder_initial != null) {
+        Storage::disk('uploads')->put('ff.txt', $folder_to_move);
 
-            $moving_file -> filepath = public_path('uploads') ; //update path file
+        if($folder_initial == $folder_to_move)
+        {
+            return back()
+            ->with('success','Fichier ' . $file_name . ' déjà présent dans ce dossier.')
+            ->with('file',$file_name);
+        }
+        elseif($folder_to_move == null) //déplacement d'un fichier vers la racine
+        {
+            $moving_file -> filepath = public_path('uploads'); //update path file
+            $moving_file -> shortpath = '\\'.$file_name; 
             $moving_file -> folder_id = null ; //update parent folder
             $moving_file->save();
-            Storage::disk('uploads') -> move( '\\'. $folder_initial->foldername . '\\'.$file_name, $file_name);
+            $folder_init_path = $folder_initial->shortpath;
+            if(file_exists($folder_init_path . '\\'.$file_name))
+            {
+                Storage::disk('uploads')->move( $file_path, '\\' . $file_name);
+            }
+
+            else 
+            {
+                return back()
+                ->with('error','Fichier ' . $file_name . ' introuvable. Veuillez réessayer.')
+                ->with('file',$file_name);
+            }
 
             return back()
             ->with('success','Fichier ' . $file_name . ' déplacé avec succès !')
             ->with('file',$file_name);
         }
-        $folder_to_move = Folder::where('id', $folder_to_move_id) -> first();
-        $folder_name = $folder_to_move -> foldername; //path du dossier où l'on souhaite déplacer le fichier
-        $folder_path = $folder_to_move -> folderpath; //path du dossier où l'on souhaite déplacer le fichier
-        
-        $name = "/" . $file_name;
-        $names = "/" . $folder_name;
-        $file_path = $moving_file -> filepath . '\\'. $file_name; //path initial du fichier à déplacer
-
-        Storage::disk('uploads') -> move( $file_name, $folder_name . '\\'.$file_name);
-        $moving_file -> filepath = $folder_path ; //update path file
-        $moving_file -> folder_id = $folder_to_move_id ; //update parent folder
-        $moving_file->save();
-        return back()
-        ->with('success','Fichier ' . $file_name . ' déplacé avec succès !')
-        ->with('file',$file_name);
+        else //dépalcement d'un fichier vers un autre dossier que la racine 
+        {   
+            $len_folder_root= strlen(public_path('uploads'));
+            $folder_to_move_path = $folder_to_move -> shortpath;
+            $shortpath = $folder_to_move_path . '\\' .$file_name ;
+            $moving_file->folder_id = $folder_to_move -> id;
+            $moving_file->shortpath = $shortpath;
+            $moving_file->filepath = $folder_to_move_path;
+            if($folder_initial == null) //si je déplace un fichier contenu à la racine 
+            {   
+                $path_to_move = '\\'. $file_name ;
+                Storage::disk('uploads') -> move($path_to_move, $folder_to_move_path . '\\'. $file_name);
+            }
+            else 
+            {
+                $folder_init_path = $folder_initial->shortpath;
+                Storage::disk('uploads') -> move( $folder_init_path . '\\'.$file_name, $folder_to_move_path . '\\'. $file_name);
+                    
+            }
+            $moving_file -> save();
+            return back()
+            ->with('success','Fichier ' . $file_name . ' déplacé avec succès !')
+            ->with('file',$file_name);
+        }
     }
 
     public function moveFolder() //Feature à venir
@@ -318,7 +381,7 @@ class GedController extends Controller{
         $file_path = $file -> filepath . '\\' . $file_name;
         $new_path =  $file -> filepath . '\\' . $new_name;
         $files = Storage::disk('uploads') -> allFiles('/');
-        Storage::disk('uploads')->put('ff.txt', $files);
+
         //renomme physiquement le fichier
         Storage::disk('uploads') -> move($file_name, $new_name); 
 
@@ -376,9 +439,6 @@ class GedController extends Controller{
             return back()
             ->with('success','Dossier renommé avec succès !');
         }
-        // $str = substr($str, 0, strpos($str, '-'));
- // $folder_path - $folder_name
-  
     }
 
     public function getFileContent($file_id)    //permet d'afficher le contenu d'un fichier

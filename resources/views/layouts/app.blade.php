@@ -41,7 +41,7 @@
                     <a class="nav-link nav-hr" href="/ged/root">Explore</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-hr" href="/wiki">Un coup de pouce ?</a>
+                    <a class="nav-link nav-hr" href="/manuel">Un coup de pouce ?</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
