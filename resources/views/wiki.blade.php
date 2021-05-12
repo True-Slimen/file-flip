@@ -5,7 +5,7 @@
 <section class="container section-top mb-5">
 
     <h1>Wiki</h1>
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum, doloremque dolores doloribus culpa id debitis sed veniam? Nam numquam, assumenda enim unde ex blanditiis ducimus, sit nostrum est soluta repudiandae.</p>
+    <p>Nous décrirons ici les différentes étapes de ce projet, les challenges techniques ainsi que </p>
 </section>
 
 <section class="container mb-5">
@@ -37,14 +37,14 @@
     <hr>
     <h4><strong>Référentiel des informations utiles</strong></h4>
     <div class="mb-5">
-        <p>Au lancement nous nous sommes concerté et avons définit un plan de route. Appuyé par nos connaissances respective, nos forces et faiblesses, les grandes étape sont étaient définit.</p>
-        <p>Suite à ça nous avons globalement déterminé la base de données puis nous nous sommes répartit les tâches.</p>
-        <p>En moyenne nous nous sommes répartit a trois sur le developpement et un sur l'infra.</p>
+        <p>Au lancement, nous nous sommes concertés et avons défini un plan de route. Appuyé par nos connaissances respectives, nos forces et faiblesses, les grandes étapes étaient définies.</p>
+        <p>Suite à cela, nous avons globalement déterminé la base de données puis nous nous sommes réparti les tâches.</p>
+        <p>En moyenne, nous nous sommes concentrer à trois sur le developpement et un sur l'infrastructure.</p>
     </div>
     <div class="mb-5">
-        <p>Avant de coder le projet nous avons voulus rassembler un maximum de compétences. Pour ce faire nous avons parcouru la <a href="https://laravel.com/docs/8.x">documentation officiel de Laravel</a>, suivie quelques <a href="https://www.youtube.com/watch?v=I-LOFM_p6BQ&list=PLeeuvNW2FHVgvC-PdSfi309DbDMoEswiT&index=13">tutoriel</a> et pratiqué.</p>
-        <p>Nous avons souhaité utilisé la version 7.3, pour profiter de plus de ressources et retours d'expériences des utilisateurs.</p>
-        <p>Majoritairement orienté javascript nous avons dût nous adapter au fonctionnement du framework. Il à était intéréssant de voir le fonctionnement du MVC au sein d'un framework php ou encore de travailler avec Eloquent, l'ORM maison.</p>
+        <p>Avant d'implémenter le projet,  nous avons voulu rassembler un maximum de compétences. Pour ce faire, nous avons parcouru la <a href="https://laravel.com/docs/8.x">documentation officiel de Laravel</a>, suivie quelques <a href="https://www.youtube.com/watch?v=I-LOFM_p6BQ&list=PLeeuvNW2FHVgvC-PdSfi309DbDMoEswiT&index=13">tutoriel</a> et pratiqué.</p>
+        <p>Nous avons souhaité utiliser la version 7.3, pour profiter de plus de ressources et retours d'expériences des utilisateurs.</p>
+        <p>Majoritairement orientés Javascript et C#,  nous avons dû nous adapter au fonctionnement du framework. Il a été intéréssant de voir le fonctionnement du MVC au sein d'un framework PHP ou encore de travailler avec Eloquent, l'ORM maison.</p>
     </div>
     <div class="mb-5">
         <p>Appuyé par git, nous avons pu travaillé en parallèle et versionner nos efforts.</p>
@@ -52,6 +52,9 @@
     </div>
     <div>
         <p>La difficulté majeur à était l'estimation de charge, face aux nombreux inconnus nous avons constatés des projections erronés.</p>
+        <p>Nous avons également rencontré une difficulté qui était l’imbrication des dossiers les uns dans les autres.</p>
+        <p>Concernant le versionning, nous en avons mis un en place. Lorsqu’un fichier est édité, une copie versionnée est placé dans le dossier /uploads/versionning avec la date du jour. Il n’est actuellement pas possible de consulter ses précédentes versions.</p>
+        <p>Nous avons créé un système de groupe, mais sans implémenter entièrement le système de droits pour des fichiers partagés au cœur du groupe.</p>
     </div>
 
     <div class="row">
@@ -66,8 +69,7 @@
 
 </section>
 <section class="container mb-5">
-    <p>Pour connaitre la procédure d'installation de File-Flip repportez vous à notre manuel</p>
-    <a href="/manuel" class="btn custom-btn-secondary">Lire le manuel</a>
+    <a href="/manuel" class="btn custom-btn-secondary">Retour au manuel</a>
 </section>
 
 @endsection
