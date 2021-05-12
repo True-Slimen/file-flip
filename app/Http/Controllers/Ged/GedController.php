@@ -31,20 +31,25 @@ class GedController extends Controller{
         $folder = Folder::all();
         $file = File::all();
         $see_rights = Right::where('user_id', $user->id)->where('type', 1)->get();
+
         $foldersWithRights = [];
-        foreach($isAdmin as $right){
-            foreach($folder as $folder2){
-                if($right->user_id==$folder2->owner_id){
-                    array_push($foldersWithRights, $folder2);
+        foreach($folder as $folder2){
+            foreach($rights as $right){
+                if($right->user_id==$folder2->owner_id and $user->id==$right->user_id){
+                    if(in_array($folder2, $foldersWithRights)==false){
+                        array_push($foldersWithRights, $folder2);
+                    }
                 }
             }
         }
 
         $filesWithRights = [];
-        foreach($isAdmin as $right){
-            foreach($file as $file2){
-                if($right->user_id==$file2->owner_id){
-                    array_push($filesWithRights, $file2);
+        foreach($file as $file2){
+            foreach($rights as $right){
+                if($right->user_id==$file2->owner_id and $user->id==$right->user_id){
+                    if(in_array($file2, $filesWithRights)==false){
+                        array_push($filesWithRights, $file2);
+                    }
                 }
             }
         }
