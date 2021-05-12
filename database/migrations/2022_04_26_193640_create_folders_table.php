@@ -23,6 +23,7 @@ class CreateFoldersTable extends Migration
             ->onUpdate('restrict');
             $table->string('foldername');
             $table->string('folderpath')->nullable();
+            $table->string('shortpath')->nullable();
             $table->integer('parent_folder')->nullable();
             $table->integer('position_folder')->nullable();
             $table->timestamps();

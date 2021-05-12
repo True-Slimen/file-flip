@@ -119,14 +119,7 @@
                 </form>
         </div>
     </div>
-    <div class=" mt-6 card modify-root-nav text-center">
-        <div class="text-center">
-            <div class=" text-center">
-                <button class="custom-btn-secondary ">Uploader un fichier</button>
-            </div>
-        </div>
-    </div>
-q</section>
+</section>
 
 
 @endsection

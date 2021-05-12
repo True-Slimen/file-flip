@@ -31,33 +31,31 @@ class FilesController extends Controller
         $folder = Folder::where('id', $folder_id) -> first(); 
         $path = public_path('uploads');
         $len_folder_root= strlen(public_path('uploads'));
-
+        $fileName = $request->file->getClientOriginalName();
         $file = new File();
 
         if($folder_id != 0)
         {   
             $folder_path = $folder -> folderpath;
             $folder_name = $folder -> foldername;
-            $shortpath = '\\uploads' . substr($folder_path, $len_folder_root);
+            $shortpath = '\\uploads' . substr($folder_path, $len_folder_root) . '\\' . $fileName;
             $file->shortpath = $shortpath;
             $file->filepath = $folder_path ;
             $path = $folder_path;
         }
         else
         {   
-            $file->shortpath = "\uploads" ;
+            $file->shortpath = "\uploads\\".$fileName ;
             $file->filepath = $path ;
         }
         $user = Auth::user();
         $owner_id = $user->id;
-        $fileName = $request->file->getClientOriginalName();
         $exist = File::where('filename', $fileName)->exists();
         if( $exist == true) 
             return back()
             ->with('error','Ce nom de fichier existe déjà, changez le s\'il vous plait.');
 
         $type = $request->file->extension();
-        Storage::disk('uploads')->put('ff.txt', $path);
         $request->file->move($path, $fileName); //enregistrement du fichier
 
 
