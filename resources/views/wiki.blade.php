@@ -47,7 +47,7 @@
         <p>Majoritairement orienté javascript nous avons dût nous adapter au fonctionnement du framework. Il à était intéréssant de voir le fonctionnement du MVC au sein d'un framework php ou encore de travailler avec Eloquent, l'ORM maison.</p>
     </div>
     <div class="mb-5">
-        <p>Appuyé par git, nous avons pu traivaillé en parallèle et versionner nos efforts.</p>
+        <p>Appuyé par git, nous avons pu travaillé en parallèle et versionner nos efforts.</p>
         <p>Quelques difficultés on était rencontré pour lancer le projet après récupération sur le dépôt distant mais nous avons rapidement pris l'habitude des commandes <i>php artisan</i> à utiliser.</p>
     </div>
     <div>
