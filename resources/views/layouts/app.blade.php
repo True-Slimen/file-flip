@@ -31,7 +31,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                 <li class="nav-item">
+                    @guest
                     <a class="nav-link nav-hr" href="/">Accueil</a>
+                    @else
+                    <a class="nav-link nav-hr" href="/dashboard">Accueil</a>
+                    @endguest
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-hr" href="/ged/root">Explore</a>

@@ -126,7 +126,7 @@
             </div>
         </div>
     </div>
-q</section>
+</section>
 
 
 @endsection

@@ -46,7 +46,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/upload-file','FilesController@showUploadPage');
 
-
     Route::get('/ged/root','Ged\GedController@gedRoot');
 
     Route::get('/ged/folder/{id}','Ged\FolderController@gedFolder');
