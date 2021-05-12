@@ -35,7 +35,7 @@ class GedController extends Controller{
         $foldersWithRights = [];
         foreach($folder as $folder2){
             foreach($rights as $right){
-                if($right->user_id==$folder2->owner_id and $user->id==$right->user_id){
+                if($right->folder_id==$folder2->id and $user->id==$right->user_id and $right->type==1){
                     if(in_array($folder2, $foldersWithRights)==false){
                         array_push($foldersWithRights, $folder2);
                     }
@@ -46,7 +46,7 @@ class GedController extends Controller{
         $filesWithRights = [];
         foreach($file as $file2){
             foreach($rights as $right){
-                if($right->user_id==$file2->owner_id and $user->id==$right->user_id){
+                if($right->file_id==$file2->id and $user->id==$right->user_id and $right->type==1){
                     if(in_array($file2, $filesWithRights)==false){
                         array_push($filesWithRights, $file2);
                     }
