@@ -27,7 +27,6 @@ class GedController extends Controller{
         
        
 
-        Storage::disk('uploads')->put('example.txt', 'Contents');
         $folder = Folder::all();
         $file = File::all();
         $see_rights = Right::where('user_id', $user->id)->where('type', 1)->get();
@@ -68,7 +67,6 @@ class GedController extends Controller{
             array_push($files, $filess);
 
         }
-        Storage::disk('uploads')->put('example.txt', $files);
         return view('/ged/root',['folderlists'=> $foldersWithRights, 'filelist'=> $file, 'isAdmins'=> $isAdmin, 'rights' => $rights]);
     }
 
@@ -191,7 +189,6 @@ class GedController extends Controller{
 
         $folders = Folder::where('id' ,'!=', null)->get();
         $folderss = Folder::where('id' ,'!=', 0)->get();
-        Storage::disk('uploads')->put('exampssle.txt', $folders);
         foreach($folders as $folder)
         {
             $parent_folder_id = $folder->parent_folder;
@@ -308,7 +305,6 @@ class GedController extends Controller{
         $folder_to_move_id = request('parent_folder'); //id du dossier où l'on souhaite déplacer le fichier
         $folder_to_move = Folder::where('id', $folder_to_move_id) -> first();
         $folder_initial = Folder::where('id', $folder_id) -> first();
-        Storage::disk('uploads')->put('ff.txt', $folder_to_move);
 
         if($folder_initial == $folder_to_move)
         {
@@ -409,7 +405,6 @@ class GedController extends Controller{
             $len_name =  strlen($folder_name);
             $original_path = substr($folder_path,0, -$len_name);
             //renomme physiquement le fichier
-            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path, $original_path] );
             $new_path = substr($path, 0, -$len_name) . $new_name ;
             Storage::disk('uploads') -> move($path, $new_path); 
     
@@ -428,7 +423,6 @@ class GedController extends Controller{
             $original_path = substr($folder_path,0, -$len_name);
             $new_path = substr($folder_path, 0, -$len_folder_root); // $folder_path - $fold
             //renomme physiquement le fichier
-            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path ] );
             Storage::disk('uploads') -> move($path, '\\'.$new_name); 
     
             //renomme le fichier en base 
@@ -443,7 +437,6 @@ class GedController extends Controller{
 
     public function getFileContent($file_id)    //permet d'afficher le contenu d'un fichier
     {   
-        Storage::disk('uploads')->put('examplqse.txt',$file_id );
         $file = File::find($file_id);
         $file_name = $file -> filename;
         $file_path = $file -> filepath;

@@ -98,7 +98,7 @@
                         <a class="footer-link" href="#">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="footer-link" href="/help">Un coup de pouce ?</a>
+                        <a class="footer-link" href="/manuel">Un coup de pouce ?</a>
                     </li>
                     <li class="nav-item">
                         <a class="footer-link" href="/sign-up">S'inscrire</a>

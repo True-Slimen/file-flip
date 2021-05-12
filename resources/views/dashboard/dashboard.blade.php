@@ -4,7 +4,7 @@
 
 <section class="container section-top mb-5">
     <h1>Bienvenue sur le Dashboard</h1>
-    <p>Explorez vos fichiers, ajoutez-en à votre espaces, creez et gérer vos groupes. Manager les droits relatifs à vos fichiers afin d'avoir un contrôle total sur leur visibilité.</p>
+    <p>Explorez vos fichiers, ajoutez-en à votre espace, creez et gérer vos groupes. Manager les droits relatifs à vos fichiers afin d'avoir un contrôle total sur leur visibilité.</p>
 </section>
 <section class="custom-card container regular-section">
     <div class="row">

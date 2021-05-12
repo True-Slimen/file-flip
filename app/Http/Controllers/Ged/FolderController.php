@@ -305,9 +305,7 @@ class FolderController extends Controller{
         if($folder_parent_id != 0){
             $len_name =  strlen($folder_name);
             $original_path = substr($folder_path,0, -$len_name);
-            //$new_path = substr($folder_path, 0, -$len_folder_root); // $folder_path - $fold
             //renomme physiquement le fichier
-            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path, $original_path, $pathq ] );
             $new_path = substr($path, 0, -$len_name) . $new_name ;
             Storage::disk('uploads') -> move($path, $new_path); 
     
@@ -326,7 +324,6 @@ class FolderController extends Controller{
             $original_path = substr($folder_path,0, -$len_name);
             $new_path = substr($folder_path, 0, -$len_folder_root); // $folder_path - $fold
             //renomme physiquement le fichier
-            Storage::disk('uploads')->put('examplqse.txt', [$path, $folder_path, $original_path, $pathq ] );
             Storage::disk('uploads') -> move($path, '\\'.$new_name); 
     
             //renomme le fichier en base 
