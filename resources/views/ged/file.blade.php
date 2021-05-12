@@ -13,7 +13,7 @@
                                                 Déplacer
                                             </button>
                                             @if($file->type=='txt')
-                                            <a class="btn btn-outline-secondary btn-sm col-12" onclick="window.open('/ged/edit-file/{{$file->id}}')" data-toggle="modal" href="/ged/edit-file/{{$file->id}}"> 
+                                            <a class="btn btn-outline-secondary btn-sm col-3" onclick="window.open('/ged/edit-file/{{$file->id}}')" data-toggle="modal" href="/ged/edit-file/{{$file->id}}"> 
                                                 Edit 
                                                 </a>
                                             @endif

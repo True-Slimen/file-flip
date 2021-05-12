@@ -58,15 +58,10 @@ class RightsController extends Controller
         $right->user_id = $userid;
         $right->save();
 
-
         return back();
     }
     
     public function assignRightFile(){
-        $files = File::all();
-        $folders = Folder::all();
-        $users = User::all();
-
         $rightslist = [
             'Voir', 'Lire', 'Ecrire', 'Supprimer', 'Déplacer', 'Copier'
         ];
@@ -77,22 +72,36 @@ class RightsController extends Controller
             'filename' => 'required',
         ]);
 
-        $test = "teeeest";
-
-
         $rightid = request('rightname');
         $rightid = $rightid + 1;
         $userid = request('username');
         $fileid = request('filename');
 
-        $right = new Right();
-        $right->type = $rightid;
-        $right->user_id = $userid;
-        $right->file_id = $fileid;
-        $right->save();
+        // $username = User::where('id', '=', $userid)->get();
 
+        // $filename = File::where('id', '=', $fileid)->get();
+        //$filename = $filename->filename;
 
-        return back();
+        $existRight = Right::where('user_id', '=', $userid)
+        ->where('file_id', '=', $fileid)
+        ->where('type', '=', $rightid)
+        ->get();
+
+        if(count($existRight) < 1){
+            $right = new Right();
+            $right->type = $rightid;
+            $right->user_id = $userid;
+            $right->file_id = $fileid;
+            $right->save();
+    
+    
+            return back()
+            ->with('success', 'Le droit à bien été ajouté');
+        }
+
+        return back()
+        ->with('error', 'Le droit existe déjà');
+       
     }
 
     public function assignRightFolder(){
@@ -121,13 +130,23 @@ class RightsController extends Controller
         $userid = request('username');
         $folderid = request('foldername');
 
-        $right = new Right();
-        $right->type = $rightid;
-        $right->user_id = $userid;
-        $right->folder_id = $folderid;
-        $right->save();
+        $existRight = Right::where('user_id', '=', $userid)
+        ->where('folder_id', '=', $folderid)
+        ->where('type', '=', $rightid)
+        ->get();
 
+        if(count($existRight) < 1){
 
-        return back();
+            $right = new Right();
+            $right->type = $rightid;
+            $right->user_id = $userid;
+            $right->folder_id = $folderid;
+            $right->save();
+
+            return back()
+            ->with('success', 'Le droit à bien été ajouté');
+        }
+        return back()
+        ->with('error', 'Le droit existe déjà');
     }
 }

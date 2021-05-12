@@ -28,7 +28,11 @@
                 @endisset
                 <hr>
                 <div class="row justify-content-around">
+                @foreach($isadmin as $right)
+                    @if($right->type==10)
                     <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/edit-group">Editer les groupes</a>
+                    @endif
+                @endforeach
                 </div>
             </div>
             <div class="card wrapper mt-3 p-3">
@@ -68,7 +72,7 @@
                 <div class="row justify-content-around">
                     @foreach($isadmin as $right)
                     @if($right->type==10)
-                    <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/create-user">Créer</a>
+                    <a class="btn btn-outline-secondary mr-auto ml-3 col-4" href="/create-user">Créer un utilisateur</a>
                     @endif
                     @endforeach
                 </div>
