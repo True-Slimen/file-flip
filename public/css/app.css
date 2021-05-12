@@ -10971,6 +10971,7 @@ h4,
 h5,
 h6 {
   font-size: 19px !important;
+  font-weight: bold !important;
 }
 
 .container {
@@ -11039,6 +11040,10 @@ h6 {
 
 .btn-delete {
   height: 100%;
+}
+
+.list-ressources {
+  list-style: none !important;
 }
 
 label {
