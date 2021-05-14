@@ -38,14 +38,14 @@ class FilesController extends Controller
         {   
             $folder_path = $folder -> folderpath;
             $folder_name = $folder -> foldername;
-            $shortpath = '\\uploads' . substr($folder_path, $len_folder_root) . '\\' . $fileName;
+            $shortpath = '/uploads' . substr($folder_path, $len_folder_root) . '/' . $fileName;
             $file->shortpath = $shortpath;
             $file->filepath = $folder_path ;
             $path = $folder_path;
         }
         else
         {   
-            $file->shortpath = "\uploads\\".$fileName ;
+            $file->shortpath = "/uploads/".$fileName ;
             $file->filepath = $path ;
         }
         $user = Auth::user();

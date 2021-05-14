@@ -1,6 +1,6 @@
                             <ul>
                                 <li class="row file-list">
-                                    <a class="col-6" href="{{url('/')}}/{{$file->shortpath}}/{{ $file->filename}}" target="_blank">{{ $file->filename }}</a>
+                                    <a class="col-6" href="{{url('/')}}{{$file->shortpath}}" target="_blank">{{ $file->filename }}</a>
                                 @isset($rights)
                                     <div class="col-5 ml-auto edit-file-wrapper row">
                                     @foreach($rights as $right)

@@ -96,9 +96,9 @@ class GedController extends Controller{
 
         if($parent_id == 0)
         {
-            $path = public_path('uploads').'\\' . $foldername ;
+            $path = public_path('uploads').'/' . $foldername ;
             $folder->folderpath = $path ;
-            $folder->shortpath = '\\'.$foldername ;
+            $folder->shortpath = '/'.$foldername ;
             if( is_dir($path))
             {
                 return back ()
@@ -124,10 +124,10 @@ class GedController extends Controller{
             }
             $len_folder_root= strlen(public_path('uploads'));
             $parent_path = $parent_folder ->folderpath ;
-            $folder->folderpath = $parent_path . '\\' . $foldername ;
-            $folder->shortpath = substr($parent_path, $len_folder_root) . '\\'.$foldername;
+            $folder->folderpath = $parent_path . '/' . $foldername ;
+            $folder->shortpath = substr($parent_path, $len_folder_root) . '/'.$foldername;
             $folder->save();
-            $newDirectory = FacadesFile::makeDirectory($parent_path . '\\' . $foldername);
+            $newDirectory = FacadesFile::makeDirectory($parent_path . '/' . $foldername);
 
         }
 
@@ -171,7 +171,7 @@ class GedController extends Controller{
         {   //$file_name = $deletingFile -> filename; 
             Right::where('file_id', $deletingFile->id)->delete();
             File::where('id', $deletingFile->id)->delete();
-            //Storage::disk('uploads')->delete($folder_name . '\\' . $file_name);
+            //Storage::disk('uploads')->delete($folder_name . '/' . $file_name);
         }
 
         //supression des dossiers contenus dans le dossier
@@ -234,7 +234,7 @@ class GedController extends Controller{
         {
             $parent_folder = Folder::where('id', $folder_id) -> first();
             $folder_name = $parent_folder -> foldername ;
-            Storage::disk('uploads')->delete($folder_name . '\\' . $file_name);
+            Storage::disk('uploads')->delete($folder_name . '/' . $file_name);
         }
         else //si le fichier est à la racine
         {
@@ -266,7 +266,7 @@ class GedController extends Controller{
         $file->filename =  $copyFile->filename;
         if($copyFolder !== null){
             $file->filepath = $copyFolder->folderpath;
-            $file->shortpath = $copyFolder->shortpath . '\\'.$copyFile->filename;
+            $file->shortpath = $copyFolder->shortpath;
             $file->folder_id = $copyFolder->id;
         }
         else{
@@ -275,8 +275,8 @@ class GedController extends Controller{
         // $file->filepath =  $copyFile -> "";
         $file->save();
 
-        $fileToCopyEndPath = str_replace($path, '', $copyFile->filepath).'\\'.$copyFile->filename;
-        $fileCopiedEndPath = str_replace($path, '', $file->filepath).'\\'.$copyFile->filename;
+        $fileToCopyEndPath = str_replace($path, '', $copyFile->filepath . '/' . $copyFile -> filename);
+        $fileCopiedEndPath = str_replace($path, '', $file->filepath).'/'.$copyFile -> filename;
             
         
         
@@ -315,13 +315,13 @@ class GedController extends Controller{
         elseif($folder_to_move == null) //déplacement d'un fichier vers la racine
         {
             $moving_file -> filepath = public_path('uploads'); //update path file
-            $moving_file -> shortpath = '\\'.$file_name; 
+            $moving_file -> shortpath = '/'.$file_name; 
             $moving_file -> folder_id = null ; //update parent folder
             $moving_file->save();
             $folder_init_path = $folder_initial->shortpath;
-            if(file_exists($folder_init_path . '\\'.$file_name))
+            if(file_exists($folder_init_path . '/'.$file_name))
             {
-                Storage::disk('uploads')->move( $file_path, '\\' . $file_name);
+                Storage::disk('uploads')->move( $file_path, '/' . $file_name);
             }
 
             else 
@@ -339,19 +339,19 @@ class GedController extends Controller{
         {   
             $len_folder_root= strlen(public_path('uploads'));
             $folder_to_move_path = $folder_to_move -> shortpath;
-            $shortpath = $folder_to_move_path . '\\' .$file_name ;
+            $shortpath = $folder_to_move_path . '/' .$file_name ;
             $moving_file->folder_id = $folder_to_move -> id;
             $moving_file->shortpath = $shortpath;
             $moving_file->filepath = $folder_to_move_path;
             if($folder_initial == null) //si je déplace un fichier contenu à la racine 
             {   
-                $path_to_move = '\\'. $file_name ;
-                Storage::disk('uploads') -> move($path_to_move, $folder_to_move_path . '\\'. $file_name);
+                $path_to_move = '/'. $file_name ;
+                Storage::disk('uploads') -> move($path_to_move, $folder_to_move_path . '/'. $file_name);
             }
             else 
             {
                 $folder_init_path = $folder_initial->shortpath;
-                Storage::disk('uploads') -> move( $folder_init_path . '\\'.$file_name, $folder_to_move_path . '\\'. $file_name);
+                Storage::disk('uploads') -> move( $folder_init_path . '/'.$file_name, $folder_to_move_path . '\\'. $file_name);
                     
             }
             $moving_file -> save();
@@ -373,16 +373,18 @@ class GedController extends Controller{
         $file_name = $file -> filename;
         //$file = File::find($file_id);
         $type = $file -> type;
+	$shortpath = $file -> shortpath;
         $new_name = $request->input('new_name') . "." . $type;
-        $file_path = $file -> filepath . '\\' . $file_name;
-        $new_path =  $file -> filepath . '\\' . $new_name;
+        $file_path = $file -> filepath . '/' . $file_name;
+        $new_path =  $file -> filepath . '/' . $new_name;
         $files = Storage::disk('uploads') -> allFiles('/');
 
         //renomme physiquement le fichier
         Storage::disk('uploads') -> move($file_name, $new_name); 
-
+	$new_shortpath = str_replace($file_name, $new_name, $shortpath);
         //renomme le fichier en base 
         $file -> filepath = $new_path;
+	$file -> shortpath = $new_shortpath;
         $file -> filename = $new_name;
         $file->save();
 
@@ -423,7 +425,7 @@ class GedController extends Controller{
             $original_path = substr($folder_path,0, -$len_name);
             $new_path = substr($folder_path, 0, -$len_folder_root); // $folder_path - $fold
             //renomme physiquement le fichier
-            Storage::disk('uploads') -> move($path, '\\'.$new_name); 
+            Storage::disk('uploads') -> move($path, '/'.$new_name); 
     
             //renomme le fichier en base 
             $folder -> folderpath = $original_path . $new_name;
@@ -440,7 +442,7 @@ class GedController extends Controller{
         $file = File::find($file_id);
         $file_name = $file -> filename;
         $file_path = $file -> filepath;
-        $content = file_get_contents($file_path . '\\'. $file_name);
+        $content = file_get_contents($file_path . '/'. $file_name);
 
         return view('/ged/editFile',['content'=> $content, 'file_id' =>$file_id]);
     }
@@ -454,8 +456,8 @@ class GedController extends Controller{
         $today = date("d.m.y"); 
         $file_path = $file -> filepath;
         $content =request('content');
-        Storage::disk('uploads') -> move($file_name, '\\versionning\\'.'\\user_'.$user_id . '\\'.$name. '_'.$today.'.txt'); //versionne le fichiers éditer
-        file_put_contents($file_path . '\\'. $file_name, $content);
+        Storage::disk('uploads') -> move($file_name, '/versionning/'.'user_'.$user_id . '/'.$name. '_'.$today.'.txt'); //versionne le fichiers éditer
+        file_put_contents($file_path . '/'. $file_name, $content);
         return redirect('/ged/root')
         ->with('success','Fichier '.$file_name.' sauvegardé avec succès !');
     }
